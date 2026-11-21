@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Recettes low carb</title>
+<meta name="theme-color" content="#2f7d5b">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Recettes">
+<style>
+:root{--bg:#faf8f4;--card:#fff;--tx:#1f2a24;--mu:#6b756e;--ac:#2f7d5b;--acx:#fff;--bd:#e3ded4;--ok:#dff0e6;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171b18;--card:#222823;--tx:#eef2ee;--mu:#9aa59d;--ac:#5cc596;--acx:#0f1a14;--bd:#323a34;--ok:#243d2f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171b18;--card:#222823;--tx:#eef2ee;--mu:#9aa59d;--ac:#5cc596;--acx:#0f1a14;--bd:#323a34;--ok:#243d2f;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:640px;margin:0 auto;padding:16px}
+h1{font-size:1.5rem;margin:8px 0 4px}h2{font-size:1.25rem;margin:8px 0}h3{font-size:1rem;margin:20px 0 8px}
+.sub{color:var(--mu);margin:0 0 16px}
+.card{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 14px;margin:0 0 10px;color:var(--tx);font:inherit;cursor:pointer}
+.card b{display:block}.card span{color:var(--mu);font-size:.85rem}
+.tag{display:inline-block;background:var(--ok);border-radius:99px;padding:1px 9px;font-size:.78rem;margin-right:6px;color:var(--tx)}
+button.b{background:var(--ac);color:var(--acx);border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer}
+button.g{background:transparent;color:var(--ac);border:1px solid var(--bd);border-radius:12px;padding:12px 18px;font:inherit;cursor:pointer}
+button:disabled{opacity:.4}
+.back{background:none;border:0;color:var(--ac);font:inherit;padding:8px 0;cursor:pointer}
+label.i{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--bd);cursor:pointer}
+label.i input{width:20px;height:20px;margin-top:2px;accent-color:var(--ac)}
+label.i.d span{text-decoration:line-through;color:var(--mu)}
+.step{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;font-size:1.1rem;min-height:120px}
+.nav{display:flex;gap:10px;margin-top:12px}.nav button{flex:1}
+.prog{height:6px;background:var(--bd);border-radius:9px;margin:10px 0}.prog i{display:block;height:100%;background:var(--ac);border-radius:9px}
+.tabs{display:flex;gap:8px;margin:12px 0}.tabs button{flex:1}
+.tabs .on{background:var(--ac);color:var(--acx)}
+</style>
+</head>
+<body><main id="app"></main>
+<script>
+var R=[
+{t:"Omelette épinards-chèvre",a:"Plaque",g:5,m:"10 min",i:["4 œufs","150 g d’épinards frais","60 g de chèvre frais","1 c. à soupe d’huile d’olive","Sel, poivre, muscade"],s:["Fais tomber les épinards 2 min dans l’huile d’olive, puis égoutte-les bien.","Bats les œufs avec sel, poivre et une pointe de muscade.","Ajoute les épinards et le chèvre en morceaux.","Cuis à feu moyen-doux 4 à 5 min, à couvert.","Replie l’omelette et sers."]},
+{t:"Poulet crémeux champignons-moutarde",a:"Cookeo",g:6,m:"20 min",i:["2 blancs de poulet (300 g)","250 g de champignons","1 échalote","10 cl de crème","1 c. à soupe de moutarde","10 cl de bouillon","Sel, poivre"],s:["Coupe le poulet en dés, émince l’échalote et les champignons.","Mode dorer : poulet 4 min, puis échalote et champignons 3 min.","Ajoute le bouillon, ferme et cuis 8 min sous pression.","Libère la vapeur et remue avec la crème et la moutarde.","Laisse réduire 2 min en mode dorer, rectifie l’assaisonnement."]},
+{t:"Saumon et brocolis rôtis",a:"Air fryer",g:8,m:"20 min",i:["2 pavés de saumon","300 g de brocoli en bouquets","1 c. à soupe d’huile","1 citron","Ail en poudre, sel, poivre"],s:["Enrobe le brocoli d’huile, d’ail en poudre, de sel et de poivre.","Cuis 4 min à 200 °C.","Ajoute les pavés de saumon, remue le brocoli.","Cuis encore 8 min.","Termine avec le jus de citron."]},
+{t:"Velouté courgette-chèvre, œufs mollets",a:"Robot Moulinex",g:9,m:"35 min",i:["600 g de courgettes","1 oignon","400 ml de bouillon","80 g de chèvre frais","Basilic","2 œufs","Sel, poivre"],s:["Coupe les courgettes et l’oignon en morceaux.","Mets-les dans le bol avec le bouillon et le chèvre. Lance le programme soupe/velouté (environ 25 min).","Mixe jusqu’à obtenir une texture lisse, ajoute le basilic.","Pendant ce temps, cuis les œufs 6 min 30 dans l’eau bouillante, puis écale-les.","Sers le velouté avec un œuf mollet posé dessus."]},
+{t:"Boulettes de bœuf, sauce tomate-courgettes",a:"Air fryer + plaque",g:10,m:"30 min",i:["300 g de bœuf haché 5 %","1 œuf","20 g de parmesan","Persil","1 petit oignon","200 g de passata","2 courgettes","Sel, poivre"],s:["Mélange la viande, l’œuf, le parmesan, le persil et l’oignon haché. Forme des boulettes.","Cuis-les 12 min à 180 °C à l’air fryer.","Taille les courgettes en spaghettis.","Chauffe la passata 5 min, ajoute les courgettes 3 min.","Ajoute les boulettes dans la sauce et sers."]},
+{t:"Riz de chou-fleur sauté aux crevettes",a:"Robot + plaque",g:9,m:"20 min",i:["400 g de chou-fleur","250 g de crevettes décortiquées","2 œufs","2 gousses d’ail","1 c. à soupe de sauce soja","1 c. à soupe d’huile"],s:["Hache le chou-fleur par impulsions de 3 à 4 s pour obtenir une semoule.","Fais sauter les crevettes avec l’ail 3 min, puis retire-les.","Fais sauter le chou-fleur 5 min.","Pousse sur le côté et brouille les œufs.","Remets les crevettes, ajoute la sauce soja et mélange."]},
+{t:"Cuisses de poulet moutarde, haricots verts",a:"Air fryer",g:6,m:"35 min",i:["4 cuisses de poulet","2 c. à soupe de moutarde","1 c. à soupe d’huile d’olive","300 g de haricots verts","Paprika, sel, poivre"],s:["Badigeonne les cuisses de moutarde, huile, paprika, sel et poivre.","Cuis 20 min à 190 °C en les retournant à mi-cuisson.","Mélange les haricots verts avec un peu d’huile, sel et poivre.","Ajoute-les dans le panier et cuis encore 8 à 10 min.","Vérifie que le poulet est bien cuit à cœur, puis sers."]},
+{t:"Cabillaud en papillote, courgettes citronnées",a:"Air fryer",g:5,m:"25 min",i:["2 dos de cabillaud","2 courgettes","1 citron","1 c. à soupe d’huile d’olive","Aneth ou persil","Sel, poivre"],s:["Coupe les courgettes en rondelles fines.","Prépare 2 feuilles de papier cuisson : courgettes au centre, cabillaud dessus.","Ajoute huile, jus et zeste de citron, herbes, sel et poivre.","Ferme les papillotes et cuis 15 min à 180 °C.","Ouvre avec précaution (vapeur) et sers."]},
+{t:"Curry de poulet coco-épinards",a:"Cookeo",g:10,m:"25 min",i:["300 g de blanc de poulet","200 g d’épinards frais","20 cl de lait de coco","1 oignon","1 c. à soupe de pâte de curry","1 c. à soupe d’huile","Sel"],s:["Coupe le poulet en dés et émince l’oignon.","Mode dorer : oignon et poulet 4 min avec l’huile.","Ajoute la pâte de curry, mélange 1 min.","Verse le lait de coco, ferme et cuis 7 min sous pression.","Libère la vapeur, ajoute les épinards et remue 2 min en mode dorer."]},
+{t:"Gratin de chou-fleur au jambon",a:"Cookeo + air fryer",g:9,m:"30 min",i:["500 g de chou-fleur en bouquets","3 tranches de jambon","15 cl de crème","60 g d’emmental râpé","Muscade, sel, poivre"],s:["Cuis le chou-fleur 3 min sous pression dans le Cookeo avec un verre d’eau, puis égoutte.","Dispose chou-fleur et jambon coupé en lanières dans un plat.","Mélange la crème avec muscade, sel et poivre, verse sur le plat.","Parsème d’emmental.","Gratine 8 à 10 min à 190 °C à l’air fryer."]},
+{t:"Salade César au poulet, sans croûtons",a:"Plaque",g:6,m:"20 min",i:["2 blancs de poulet","1 romaine","2 œufs","30 g de parmesan","3 c. à soupe de yaourt grec","1 c. à soupe de moutarde","Jus de citron, ail, huile"],s:["Cuis le poulet à la poêle 5 à 6 min de chaque côté, puis tranche-le.","Cuis les œufs 9 min, écale-les et coupe-les en quartiers.","Mélange yaourt, moutarde, jus de citron, ail râpé et un filet d’huile.","Déchire la romaine dans un saladier avec la sauce.","Ajoute poulet, œufs et copeaux de parmesan."]},
+{t:"Œufs cocotte champignons-jambon",a:"Air fryer",g:4,m:"20 min",i:["4 œufs","150 g de champignons","2 tranches de jambon","4 c. à soupe de crème","Ciboulette, sel, poivre"],s:["Fais revenir les champignons émincés 4 min à la poêle.","Répartis champignons et jambon coupé dans 2 ramequins.","Ajoute 2 c. à soupe de crème, puis casse 2 œufs dans chaque ramequin.","Sale, poivre et cuis 8 à 10 min à 180 °C à l’air fryer.","Parsème de ciboulette."]}
+];
+var st={};try{st=JSON.parse(localStorage.getItem("lc")||"{}")}catch(e){}
+function save(){try{localStorage.setItem("lc",JSON.stringify(st))}catch(e){}}
+var app=document.getElementById("app"),cur=-1,tab="c",step=0;
+function home(){cur=-1;var h='<h1>Recettes low carb</h1><p class="sub">12 recettes pour 2 personnes · glucides par portion</p>';
+R.forEach(function(r,k){h+='<button class="card" data-k="'+k+'"><b>'+(k+1)+'. '+r.t+'</b><span><i class="tag">'+r.g+' g glucides</i>'+r.a+' · '+r.m+'</span></button>'});
+app.innerHTML=h;
+app.querySelectorAll(".card").forEach(function(b){b.onclick=function(){cur=+b.dataset.k;tab="c";step=0;draw()}});window.scrollTo(0,0)}
+function draw(){var r=R[cur],h='<button class="back" id="bk">← Toutes les recettes</button><h2>'+r.t+'</h2><p class="sub"><i class="tag">'+r.g+' g glucides</i>'+r.a+' · '+r.m+'</p>';
+h+='<div class="tabs"><button class="g'+(tab=="c"?" on":"")+'" id="tc">Courses</button><button class="g'+(tab=="s"?" on":"")+'" id="ts">Étapes</button></div>';
+if(tab=="c"){var done=st["i"+cur]||{};h+='<h3>Ingrédients (2 personnes)</h3>';
+r.i.forEach(function(x,j){h+='<label class="i'+(done[j]?" d":"")+'"><input type="checkbox" data-j="'+j+'"'+(done[j]?" checked":"")+'><span>'+x+'</span></label>'});
+h+='<div class="nav"><button class="g" id="rz">Tout décocher</button><button class="b" id="go">Cuisiner →</button></div>'}
+else{var n=r.s.length;h+='<div class="prog"><i style="width:'+((step+1)/n*100)+'%"></i></div><p class="sub">Étape '+(step+1)+' sur '+n+'</p><div class="step">'+r.s[step]+'</div>';
+h+='<div class="nav"><button class="g" id="pv"'+(step==0?" disabled":"")+'>← Précédent</button><button class="b" id="nx"'+(step==n-1?" disabled":"")+'>Suivant →</button></div>';
+h+='<h3>Ingrédients</h3><ul>'+r.i.map(function(x){return"<li>"+x+"</li>"}).join("")+"</ul>"}
+app.innerHTML=h;window.scrollTo(0,0);
+document.getElementById("bk").onclick=home;
+document.getElementById("tc").onclick=function(){tab="c";draw()};
+document.getElementById("ts").onclick=function(){tab="s";draw()};
+if(tab=="c"){app.querySelectorAll("input").forEach(function(c){c.onchange=function(){var d=st["i"+cur]=st["i"+cur]||{};d[c.dataset.j]=c.checked;save();c.parentNode.classList.toggle("d",c.checked)}});
+document.getElementById("rz").onclick=function(){st["i"+cur]={};save();draw()};
+document.getElementById("go").onclick=function(){tab="s";step=0;draw()}}
+else{document.getElementById("pv").onclick=function(){step--;draw()};document.getElementById("nx").onclick=function(){step++;draw()}}}
+home();
+</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script>
+</body>
+</html>
