@@ -26,7 +26,7 @@ h1{font-size:1.5rem;margin:8px 0 4px}h2{font-size:1.3rem;margin:4px 0 6px;line-h
 .tag{display:inline-block;background:var(--ok);border-radius:99px;padding:1px 9px;font-size:.78rem;margin-right:6px;color:var(--tx);font-style:normal}
 .tag.u{background:var(--warn)}
 .tag.k{background:var(--bd)}
-.seg{margin:8px 0 10px}.seg button{padding:10px 6px;font-weight:600}
+.seg{margin:8px 0 10px}.seg button{padding:8px 4px;font-weight:600;font-size:.85rem;line-height:1.25}.seg button i{display:block;font-style:normal;font-size:1.25rem}
 button{font:inherit}
 button.b{background:var(--ac);color:var(--acx);border:0;border-radius:12px;padding:12px 18px;font-weight:600;cursor:pointer}
 button.g{background:transparent;color:var(--ac);border:1px solid var(--bd);border-radius:12px;padding:12px 18px;cursor:pointer}
@@ -157,8 +157,23 @@ var C=[
 {k:"puree",t:"Purée de patate douce, poulet paprika",a:"Cookeo + air fryer",m:"30 min",e:["🍠","🍗"],h:22,i:["600 g de patates douces","2 blancs de poulet","10 cl de lait de coco","20 g de beurre","1 c. à café de paprika","1 c. à soupe d’huile","Sel, poivre"],s:["Épluche les patates douces et coupe-les en cubes.","Cuis-les 8 min sous pression dans le Cookeo avec un verre d’eau salée.","Badigeonne le poulet d’huile, de paprika, sel et poivre. Cuis 14 min à 190 °C à l’air fryer en le retournant à mi-cuisson.","Égoutte les patates douces et écrase-les avec le lait de coco et le beurre.","Tranche le poulet et sers-le sur la purée."]}
 ];
 C.forEach(function(r,k){r.id="c"+k});
-R.forEach(function(r,k){r.id="b"+k});R=R.concat(C);
-function sec(r){return r.k?"cl":"lc"}
+var V=[
+{v:"lc",t:"Curry de tofu coco-épinards",a:"Plaque",m:"25 min",e:["🍛","🌱"],h:75,i:["300 g de tofu ferme","200 g d’épinards frais","20 cl de lait de coco","1 petit oignon","1 gousse d’ail","1 c. à soupe de pâte de curry (sans crevette)","1 c. à soupe d’huile","Coriandre, sel"],s:["Coupe le tofu en cubes et sèche-le dans du papier absorbant.","Fais-le dorer 6 min dans l’huile à feu vif, puis retire-le.","Fais revenir l’oignon et l’ail émincés 2 min, ajoute la pâte de curry 1 min.","Verse le lait de coco, remets le tofu et laisse mijoter 5 min.","Ajoute les épinards, remue 2 min jusqu’à ce qu’ils tombent, puis parsème de coriandre."]},
+{v:"lc",t:"Halloumi grillé, salade concombre-tomate",a:"Plaque",m:"15 min",e:["🧀","🥒"],h:60,i:["200 g d’halloumi","150 g de concombre","2 tomates","1 petit oignon","30 g d’olives noires","2 c. à soupe d’huile d’olive","1 citron","Menthe, origan"],s:["Coupe le concombre, les tomates et l’oignon en dés.","Mélange-les avec les olives, 1 c. à soupe d’huile, le jus du citron, la menthe et l’origan.","Coupe l’halloumi en tranches épaisses.","Fais-le griller 2 min de chaque côté à la poêle avec le reste d’huile, jusqu’à ce qu’il soit bien doré.","Sers l’halloumi chaud sur la salade."]},
+{v:"lc",t:"Frittata courgette-feta",a:"Air fryer",m:"25 min",e:["🍳","🥒"],h:105,i:["5 œufs","1 courgette","80 g de feta","1 c. à soupe de crème","Basilic, sel, poivre"],s:["Râpe la courgette, sale-la et presse-la bien pour retirer l’eau.","Bats les œufs avec la crème, du poivre et un peu de sel (la feta est salée).","Ajoute la courgette, la feta émiettée et le basilic.","Verse dans un moule huilé qui rentre dans l’air fryer.","Cuis 15 min à 160 °C, jusqu’à ce que le centre soit pris."]},
+{v:"lc",t:"Champignons farcis épinards-ricotta",a:"Air fryer",m:"25 min",e:["🍄","🧀"],h:30,i:["400 g de gros champignons de Paris","100 g d’épinards frais","100 g de ricotta","30 g de fromage râpé","1 gousse d’ail","1 c. à soupe d’huile d’olive","Sel, poivre"],s:["Retire les pieds des champignons et hache-les finement.","Fais revenir les pieds hachés, l’ail et les épinards 3 min à la poêle.","Mélange avec la ricotta, sel et poivre, puis garnis les têtes de champignons.","Parsème de fromage râpé et arrose d’un filet d’huile.","Cuis 12 min à 180 °C à l’air fryer."]},
+{v:"lc",t:"Tofu sauté au brocoli et sésame",a:"Plaque",m:"20 min",e:["🥦","🌱"],h:130,i:["300 g de tofu ferme","300 g de brocoli","2 c. à soupe de sauce soja","1 gousse d’ail","1 c. à café de gingembre","1 c. à soupe de graines de sésame","1 c. à soupe d’huile de sésame"],s:["Coupe le tofu en cubes, sèche-le et fais-le dorer 6 min dans l’huile, puis retire-le.","Fais sauter le brocoli en petits bouquets 4 min avec un fond d’eau.","Ajoute l’ail et le gingembre râpés, cuis 1 min.","Remets le tofu, ajoute la sauce soja et fais sauter 2 min.","Parsème de graines de sésame et sers."]},
+{v:"lc",t:"Aubergine gratinée tomate-mozzarella",a:"Air fryer",m:"35 min",e:["🍆","🍅"],h:290,i:["1 grosse aubergine (350 g)","200 g de passata","1 mozzarella","1 gousse d’ail","2 c. à soupe d’huile d’olive","Basilic, sel, poivre"],s:["Coupe l’aubergine en tranches de 1 cm, badigeonne-les d’huile et sale-les.","Cuis-les 12 min à 190 °C à l’air fryer, en les retournant à mi-cuisson.","Mélange la passata avec l’ail râpé, sel et poivre.","Dans un plat qui rentre dans l’air fryer, alterne aubergine, sauce et mozzarella en tranches.","Gratine 10 min à 180 °C et parsème de basilic."]},
+{v:"cl",t:"Dahl de lentilles corail et riz",a:"Cookeo",m:"25 min",e:["🍛","🥥"],h:28,i:["150 g de lentilles corail","20 cl de lait de coco","1 oignon","2 gousses d’ail","200 g de tomates concassées","1 c. à soupe de curry","1 c. à café de gingembre","30 cl de bouillon de légumes","150 g de riz basmati","Coriandre"],s:["Émince l’oignon et l’ail. Rince les lentilles.","Mode dorer : fais revenir l’oignon, l’ail, le gingembre et le curry 2 min.","Ajoute les lentilles, les tomates concassées et le bouillon. Ferme et cuis 6 min sous pression.","Pendant ce temps, cuis le riz 11 min dans l’eau bouillante salée.","Libère la vapeur, ajoute le lait de coco, mélange et sers avec le riz et la coriandre."]},
+{v:"cl",t:"Chili sin carne",a:"Cookeo",m:"30 min",e:["🌶️","🫘"],h:5,i:["250 g de haricots rouges cuits","100 g de maïs","1 poivron rouge","1 oignon","2 gousses d’ail","400 g de tomates concassées","1 c. à café de cumin","1 c. à café de paprika fumé","1 c. à soupe d’huile d’olive","150 g de riz"],s:["Émince l’oignon et l’ail, coupe le poivron en dés.","Mode dorer : fais-les revenir 3 min dans l’huile avec les épices.","Ajoute les tomates concassées et les haricots rouges égouttés. Ferme et cuis 8 min sous pression.","Pendant ce temps, cuis le riz 11 min dans l’eau bouillante salée.","Libère la vapeur, ajoute le maïs, laisse réduire 3 min en mode dorer et sers avec le riz."]},
+{v:"cl",t:"Gnocchis poêlés tomate-mozzarella",a:"Plaque",m:"20 min",e:["🥔","🍅"],h:15,i:["500 g de gnocchis","300 g de passata","1 mozzarella","1 gousse d’ail","1 c. à soupe d’huile d’olive","Basilic, sel, poivre"],s:["Fais dorer les gnocchis 6 min dans l’huile à feu moyen, sans les cuire à l’eau.","Ajoute l’ail râpé et cuis 1 min.","Verse la passata, sale, poivre et laisse mijoter 4 min.","Ajoute la mozzarella en morceaux, couvre et laisse fondre 2 min.","Parsème de basilic et sers."]},
+{v:"cl",t:"Buddha bowl quinoa et pois chiches rôtis",a:"Air fryer",m:"30 min",e:["🥗","🥑"],h:95,i:["120 g de quinoa","250 g de pois chiches cuits","300 g de patate douce","1 avocat","100 g d’épinards frais","2 c. à soupe de yaourt grec","1 citron","1 c. à café de paprika","1 c. à soupe d’huile d’olive","Sel, poivre"],s:["Cuis le quinoa 12 min dans 2 fois son volume d’eau salée.","Coupe la patate douce en cubes, mélange-la avec les pois chiches égouttés, l’huile, le paprika et le sel.","Cuis 18 min à 200 °C à l’air fryer en secouant à mi-cuisson.","Mélange le yaourt avec le jus du citron, sel et poivre.","Dresse le quinoa, les épinards, la patate douce, les pois chiches et l’avocat, puis arrose de sauce."]},
+{v:"cl",t:"Nouilles sautées au tofu et légumes",a:"Plaque",m:"20 min",e:["🥡","🌱"],h:40,i:["150 g de nouilles aux œufs","250 g de tofu ferme","1 carotte","1 poivron rouge","100 g de pousses de soja","2 c. à soupe de sauce soja","1 c. à soupe de miel","1 gousse d’ail","1 c. à soupe d’huile"],s:["Cuis les nouilles 4 min dans l’eau bouillante, puis égoutte-les.","Coupe le tofu en cubes et fais-le dorer 6 min dans l’huile, puis retire-le.","Fais sauter la carotte en bâtonnets, le poivron en lanières et l’ail 3 min.","Ajoute les nouilles, le tofu, les pousses de soja, la sauce soja et le miel.","Fais sauter 2 min à feu vif et sers."]},
+{v:"cl",t:"Lasagnes épinards-ricotta",a:"Air fryer",m:"45 min",e:["🥬","🧀"],h:115,i:["120 g de feuilles de lasagne","300 g d’épinards frais","250 g de ricotta","300 g de passata","1 mozzarella","1 gousse d’ail","Muscade, sel, poivre"],s:["Fais tomber les épinards 3 min à la poêle avec l’ail, égoutte-les bien et hache-les.","Mélange-les avec la ricotta, la muscade, sel et poivre.","Dans un plat qui rentre dans l’air fryer, alterne passata, feuilles de lasagne (sans précuisson) et mélange épinards-ricotta. Termine par la passata et la mozzarella.","Couvre de papier alu et cuis 15 min à 170 °C.","Retire l’alu et cuis encore 10 min pour gratiner. Laisse reposer 5 min."]}
+];
+V.forEach(function(r,k){r.id="v"+k});
+R.forEach(function(r,k){r.id="b"+k});R=R.concat(C,V);
+function sec(r){return r.v?"vg":r.k?"cl":"lc"}
 
 /* ---------- Données sauvegardées ---------- */
 var st={};try{st=JSON.parse(localStorage.getItem("lc")||"{}")}catch(e){}
@@ -199,10 +214,10 @@ function photoBtns(r){return'<div class="pb">'+(P[r.id]?'<button id="phx">Retire
 /* ---------- Analyse des ingrédients & glucides nets ---------- */
 /* [motif, glucides nets /100 g, poids d’une unité en g, rayon, kcal /100 g] — valeurs moyennes approximatives (féculents pesés crus) */
 var NC=[
-[/lait de coco/,3,0,"E",190],[/huile/,0,0,"E",900],[/beurre de cacahuete/,12,0,"E",600],[/cacahuete/,10,0,"E",580],
+[/lait de coco/,3,0,"E",190],[/tofu/,1.5,0,"C",145],[/halloumi/,2,0,"C",320],[/lentille/,50,0,"E",330],[/haricots? rouges?/,13,0,"E",110],[/quinoa/,57,0,"E",370],[/gnocchi/,32,0,"E",150],[/huile/,0,0,"E",900],[/beurre de cacahuete/,12,0,"E",600],[/cacahuete/,10,0,"E",580],
 [/nouilles? de riz|vermicelles? de riz/,80,0,"E",360],[/nouilles? ramen|ramen/,68,0,"E",370],[/nouille/,68,0,"E",380],
 [/vinaigre/,1,0,"E",20],[/\briz\b/,77,0,"E",350],
-[/spaghetti|penne|tagliatelle|fusilli|linguine|macaroni|coquillette|farfalle|rigatoni|\bpates\b/,70,0,"E",355],
+[/spaghetti|penne|tagliatelle|fusilli|linguine|macaroni|coquillette|farfalle|rigatoni|lasagne|\bpates\b/,70,0,"E",355],
 [/chapelure/,72,0,"E",380],[/pains? a burger|pains? burger|\bbuns?\b/,48,75,"B",270],[/pois chiche/,16,0,"E",140],
 [/mayonnaise/,1,0,"E",700],[/ketchup/,25,0,"E",110],[/sriracha/,20,0,"E",100],[/miso/,25,0,"E",200],[/sauce huitre/,10,0,"E",50],
 [/\bmiel\b/,80,0,"E",320],[/sucre/,100,0,"E",400],[/mirin/,40,0,"E",230],[/sesame/,12,0,"E",570],[/pesto/,5,0,"E",450],
@@ -216,7 +231,7 @@ var NC=[
 [/carotte/,7,100,"L",40],[/petits? pois/,10,0,"L",80],[/\bmais\b/,17,0,"L",100],[/pak choi|bok choy/,1.2,150,"L",13],
 [/romaine|laitue|salade|roquette|mache/,1.2,300,"L",15],[/avocat/,2,150,"L",160],[/celeri/,3,500,"L",30],[/poireau/,5,200,"L",30],
 [/citron vert/,7,30,"L",30],[/citron confit/,1,60,"L",30],[/citron/,7,40,"L",30],[/gingembre/,10,10,"L",80],[/piment/,6,10,"L",40],
-[/asperge/,2,20,"L",20],[/chou/,3.5,800,"L",25],[/basilic|persil|coriandre|menthe|aneth|ciboulette|thym|herbe|romarin/,0,5,"L",40],
+[/asperge/,2,20,"L",20],[/chou/,3.5,800,"L",25],[/basilic|persil|coriandre|menthe|aneth|ciboulette|thym|herbe|romarin|origan/,0,5,"L",40],
 [/jambon/,1,40,"V",115],[/lardon|bacon/,.5,0,"V",300],[/chorizo/,2,0,"V",450],[/saucisse/,1,100,"V",300],
 [/(hache|steak).*\b(15|20) ?%/,0,150,"V",215],[/hache/,0,125,"V",125],[/blancs? de poulet/,0,150,"V",120],[/hauts? de cuisse/,0,125,"V",180],
 [/cuisses? de poulet/,0,200,"V",150],[/truite fumee/,0,0,"V",140],[/truite/,0,130,"V",150],[/saumon fume/,0,0,"V",180],[/saumon/,0,130,"V",200],[/dos de cabillaud/,0,140,"V",80],
@@ -303,14 +318,15 @@ var o=b.querySelector(".bdg");if(o)o.remove();if(n)b.insertAdjacentHTML("beforee
 var F={q:"",c:"",g:"",t:"",s:""};
 var CH={lc:[["","Toutes"],["fav","★ Favoris"],["cookeo","Cookeo"],["air fryer","Air fryer"],["plaque","Plaque"],["robot","Robot"],["u","Mes recettes"]],
 cl:[["","Toutes"],["fav","★ Favoris"],["k:riz","🍚 Riz"],["k:pates","🍝 Pâtes"],["k:nouilles","🥡 Nouilles"],["k:ramen","🍜 Ramen"],["k:burger","🍔 Burgers"],["k:puree","🥔 Purées"],["u","Mes recettes"]]};
+CH.vg=[["","Toutes"],["fav","★ Favoris"],["v:lc","🥗 Low carb"],["v:cl","🍝 Classiques"],["u","Mes recettes"]];
 var KN={riz:"Riz",pates:"Pâtes",nouilles:"Nouilles",ramen:"Ramen",burger:"Burger",puree:"Purée",autre:"Autre"};
-function S(){return st.sec=="cl"?"cl":"lc"}
+function S(){return st.sec=="cl"||st.sec=="vg"?st.sec:"lc"}
 function home(){var se=S(),n=all().filter(function(r){return sec(r)==se}).length;
-var h='<h1>Recettes</h1><div class="tabs seg"><button class="g'+(se=="lc"?" on":"")+'" data-s="lc">🥗 Low carb</button><button class="g'+(se=="cl"?" on":"")+'" data-s="cl">🍝 Riz, pâtes & co</button></div>';
-h+='<p class="sub">'+n+" recettes · "+(se=="lc"?"glucides nets et calories par portion":"riz, pâtes, nouilles, ramen, burgers, purées")+"</p>";
+var h='<h1>Recettes</h1><div class="tabs seg">'+[["lc","🥗","Low carb"],["cl","🍝","Riz, pâtes\u00a0&amp;\u00a0co"],["vg","🌱","Végétarien"]].map(function(x){return'<button class="g'+(se==x[0]?" on":"")+'" data-s="'+x[0]+'"><i>'+x[1]+"</i>"+x[2]+"</button>"}).join("")+"</div>";
+h+='<p class="sub">'+n+" recettes · "+({lc:"glucides nets et calories par portion",cl:"riz, pâtes, nouilles, ramen, burgers, purées",vg:"végétariennes, low carb et classiques"}[se])+"</p>";
 h+='<input type="search" id="q" placeholder="Recette ou ingrédient (ex. : truite, feta…)" value="'+esc(F.q)+'">';
 h+='<div class="chips">'+CH[se].map(function(c){return'<button class="chip'+(F.c==c[0]?" on":"")+'" data-c="'+c[0]+'">'+c[1]+"</button>"}).join("")+"</div>";
-h+=se=="lc"?'<div class="flt"><select id="fg" aria-label="Glucides"><option value="">Glucides</option><option value="5">≤ 5 g / portion</option><option value="8">≤ 8 g / portion</option><option value="10">≤ 10 g / portion</option></select>'
+h+=se!="cl"?'<div class="flt"><select id="fg" aria-label="Glucides"><option value="">Glucides</option><option value="5">≤ 5 g / portion</option><option value="8">≤ 8 g / portion</option><option value="10">≤ 10 g / portion</option></select>'
 :'<div class="flt"><select id="fg" aria-label="Calories"><option value="">Calories</option><option value="k500">≤ 500 kcal</option><option value="k650">≤ 650 kcal</option><option value="k800">≤ 800 kcal</option></select>';
 h+='<select id="ft" aria-label="Temps"><option value="">Temps</option><option value="15">≤ 15 min</option><option value="25">≤ 25 min</option><option value="35">≤ 35 min</option></select>';
 h+='<select id="so" aria-label="Tri"><option value="">Trier</option><option value="g">Moins de glucides</option><option value="k">Moins de calories</option><option value="m">Plus rapides</option><option value="t">A → Z</option></select></div><div id="res"></div>';
@@ -325,7 +341,8 @@ if(sec(r)!=se)return false;
 if(F.c=="fav"&&!st.f[r.id])return false;
 if(F.c=="u"&&r.id[0]!="u")return false;
 if(F.c.indexOf("k:")==0&&r.k!=F.c.slice(2))return false;
-if(F.c&&F.c!="fav"&&F.c!="u"&&F.c.indexOf("k:")<0&&norm(r.a).indexOf(F.c)<0)return false;
+if(F.c.indexOf("v:")==0&&r.v!=F.c.slice(2))return false;
+if(F.c&&F.c!="fav"&&F.c!="u"&&F.c.indexOf("k:")<0&&F.c.indexOf("v:")<0&&norm(r.a).indexOf(F.c)<0)return false;
 if(F.g){if(F.g[0]=="k"){if(kcal(r)>+F.g.slice(1))return false}else if(Math.round(carbs(r))>+F.g)return false}
 if(F.t&&(mins(r)||999)>+F.t)return false;
 if(q&&q.split(/\s+/).some(function(w){return norm(r.t+" "+r.a+" "+r.i.join(" ")).indexOf(w)<0}))return false;return true});
@@ -334,7 +351,7 @@ if(F.s=="k")a.sort(function(x,y){return kcal(x)-kcal(y)});
 if(F.s=="m")a.sort(function(x,y){return(mins(x)||999)-(mins(y)||999)});
 if(F.s=="t")a.sort(function(x,y){return x.t.localeCompare(y.t,"fr")});
 var tot=all().filter(function(r){return sec(r)==se}).length;
-var h=a.map(function(r){return'<button class="card" data-id="'+r.id+'">'+cover(r)+'<div class="ct"><b>'+esc(r.t)+'</b><span>'+(se=="lc"?'<i class="tag">'+gtxt(carbs(r))+' g glucides</i>':"")+'<i class="tag k">'+ktxt(kcal(r))+" kcal</i>"+(r.id[0]=="u"?'<i class="tag u">perso</i>':"")+"<br>"+esc(r.a)+(r.m?" · "+esc(r.m):"")+"</span></div>"+(st.f[r.id]?'<span class="fav">★</span>':"")+(inList(r.id)?"<span>🛒</span>":"")+"</button>"}).join("");
+var h=a.map(function(r){return'<button class="card" data-id="'+r.id+'">'+cover(r)+'<div class="ct"><b>'+esc(r.t)+'</b><span>'+(se=="lc"||r.v=="lc"?'<i class="tag">'+gtxt(carbs(r))+' g glucides</i>':"")+'<i class="tag k">'+ktxt(kcal(r))+" kcal</i>"+(r.id[0]=="u"?'<i class="tag u">perso</i>':"")+"<br>"+esc(r.a)+(r.m?" · "+esc(r.m):"")+"</span></div>"+(st.f[r.id]?'<span class="fav">★</span>':"")+(inList(r.id)?"<span>🛒</span>":"")+"</button>"}).join("");
 var res=document.getElementById("res");
 res.innerHTML=(a.length!=tot?'<p class="small">'+a.length+" résultat"+(a.length>1?"s":"")+"</p>":"")+(h||'<p class="empty">Aucune recette ne correspond.</p>');
 res.querySelectorAll(".card").forEach(function(b){b.onclick=function(){view.y=window.scrollY;go("#r/"+b.dataset.id)}})}
@@ -343,7 +360,7 @@ res.querySelectorAll(".card").forEach(function(b){b.onclick=function(){view.y=wi
 function recipe(r,steps){var p=por(r.id),cp=carbs(r),nu=nutri(r);
 var h='<div class="top"><button class="back" id="bk">← Recettes</button><div>'+(r.id[0]=="u"?'<button class="ico" id="ed" aria-label="Modifier">✏️</button>':'')+'<button class="ico'+(st.f[r.id]?" on":"")+'" id="fv" aria-label="Favori">'+(st.f[r.id]?"★":"☆")+"</button></div></div>";
 if(!steps)h+=cover(r,true);
-h+="<h2>"+esc(r.t)+'</h2><p class="sub" style="margin:0">'+(r.k?esc(KN[r.k]||"")+" · ":"")+esc(r.a)+(r.m?" · "+esc(r.m):"")+"</p>";
+h+="<h2>"+esc(r.t)+'</h2><p class="sub" style="margin:0">'+(r.v?"🌱 Végétarien "+(r.v=="lc"?"low carb":"classique")+" · ":r.k?esc(KN[r.k]||"")+" · ":"")+esc(r.a)+(r.m?" · "+esc(r.m):"")+"</p>";
 h+='<div class="stp"><button id="pm" aria-label="Moins"'+(p<=1?" disabled":"")+'>−</button><b>'+p+" personne"+(p>1?"s":"")+'</b><button id="pp" aria-label="Plus"'+(p>=6?" disabled":"")+">+</button></div>";
 h+='<div class="tabs"><button class="g'+(!steps?" on":"")+'" id="ti">Ingrédients</button><button class="g'+(steps?" on":"")+'" id="ts">Cuisiner</button></div>';
 if(!steps){var L=inList(r.id);
@@ -456,8 +473,8 @@ else if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toa
 function edit(r){var n=!r;r=r||{t:"",a:"",gm:"",m:"",i:[],s:[],e:[]};
 var h='<div class="top"><button class="back" id="bk">← Annuler</button></div><h2>'+(n?"Nouvelle recette":"Modifier la recette")+"</h2>";
 h+='<label class="f">Nom</label><input type="text" id="et" value="'+esc(r.t)+'">';
-var dk=n?(S()=="cl"?(F.c.indexOf("k:")==0?F.c.slice(2):"autre"):""):(r.k||"");
-h+='<label class="f">Rubrique</label><select id="ek"><option value="">🥗 Low carb</option>'+Object.keys(KN).map(function(k){return'<option value="'+k+'">🍝 '+KN[k]+"</option>"}).join("")+"</select>";
+var dk=n?(S()=="cl"?(F.c.indexOf("k:")==0?F.c.slice(2):"autre"):S()=="vg"?(F.c=="v:cl"?"v:cl":"v:lc"):""):(r.v?"v:"+r.v:r.k||"");
+h+='<label class="f">Rubrique</label><select id="ek"><option value="">🥗 Low carb</option>'+Object.keys(KN).map(function(k){return'<option value="'+k+'">🍝 '+KN[k]+"</option>"}).join("")+'<option value="v:lc">🌱 Végétarien low carb</option><option value="v:cl">🌱 Végétarien classique</option></select>';
 h+='<div class="row"><div style="flex:1"><label class="f">Appareil</label><input type="text" id="ea" list="apl" value="'+esc(r.a)+'" placeholder="Air fryer…"></div><div style="flex:1"><label class="f">Temps</label><input type="text" id="em" value="'+esc(r.m)+'" placeholder="20 min"></div></div>';
 h+='<datalist id="apl"><option value="Plaque"><option value="Cookeo"><option value="Air fryer"><option value="Robot Moulinex"><option value="Four"></datalist>';
 h+='<label class="f">Ingrédients <span class="hint">— pour 2 personnes, un par ligne, avec la quantité (ex. : 150 g de brocoli, 2 œufs, 10 cl de crème)</span></label><textarea id="ei" rows="7" placeholder="4 œufs&#10;150 g d’épinards">'+esc(r.i.join("\n"))+"</textarea>";
@@ -476,7 +493,7 @@ document.getElementById("ok").onclick=function(){
 function v(id){return document.getElementById(id).value.trim()}
 function lines(id){return v(id).split("\n").map(function(x){return x.trim()}).filter(Boolean)}
 var em=v("ee"),ems=em?(em.match(/\p{Extended_Pictographic}️?/gu)||[]).slice(0,2):[];
-var o={k:document.getElementById("ek").value,t:v("et"),a:v("ea")||"Autre",m:v("em"),gm:v("eg")===""?null:parseFloat(v("eg").replace(",",".")),i:lines("ei"),s:lines("es"),e:ems};
+var ek=document.getElementById("ek").value,o={k:ek.indexOf("v:")==0?"":ek,v:ek.indexOf("v:")==0?ek.slice(2):"",t:v("et"),a:v("ea")||"Autre",m:v("em"),gm:v("eg")===""?null:parseFloat(v("eg").replace(",",".")),i:lines("ei"),s:lines("es"),e:ems};
 if(!o.t){toast("Donne un nom à la recette");return}if(!o.s.length)o.s=["(aucune étape)"];
 if(n){o.id="u"+Date.now();st.u.push(o)}else{o.id=r.id;for(var k=0;k<st.u.length;k++)if(st.u[k].id==r.id)st.u[k]=o}
 save();toast("Recette enregistrée");go("#r/"+o.id,true)};
@@ -488,7 +505,7 @@ function more(){var h='<h1>Réglages</h1>';
 h+='<label class="f">Thème</label><select id="th"><option value="">Automatique</option><option value="light">Clair</option><option value="dark">Sombre</option></select>';
 h+='<h3>Sauvegarde</h3><p class="small">Favoris, notes, recettes perso, photos, nombre de personnes et liste de courses sont enregistrés sur ce téléphone et marchent hors ligne. Exporte une sauvegarde pour ne rien perdre en cas de réinstallation ou de changement de téléphone.</p>';
 h+='<div class="nav"><button class="g" id="ex">Exporter</button><button class="g" id="im">Importer</button></div><input type="file" id="fi" accept=".json,application/json" hidden>';
-h+='<h3>À propos</h3><p class="small">'+R.filter(function(r){return!r.k}).length+" recettes low carb, "+C.length+" recettes riz, pâtes & co, "+st.u.length+" perso, "+Object.keys(st.f).length+" favori(s), "+Object.keys(P).length+' photo(s).<br>Les glucides nets et les calories sont des estimations calculées à partir de valeurs nutritionnelles moyennes.</p>';
+h+='<h3>À propos</h3><p class="small">'+R.filter(function(r){return!r.k}).length+" recettes low carb, "+C.length+" recettes riz, pâtes & co, "+V.length+" recettes végétariennes, "+st.u.length+" perso, "+Object.keys(st.f).length+" favori(s), "+Object.keys(P).length+' photo(s).<br>Les glucides nets et les calories sont des estimations calculées à partir de valeurs nutritionnelles moyennes.</p>';
 app.innerHTML=h;
 var th=document.getElementById("th");th.value=st.theme||"";th.onchange=function(){st.theme=th.value;save();theme()};
 document.getElementById("ex").onclick=function(){var data=JSON.stringify({app:"recettes",v:2,st:st,photos:P}),name="recettes-sauvegarde-"+new Date().toISOString().slice(0,10)+".json";
