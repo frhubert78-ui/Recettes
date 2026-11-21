@@ -12,72 +12,437 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Recettes">
 <style>
-:root{--bg:#faf8f4;--card:#fff;--tx:#1f2a24;--mu:#6b756e;--ac:#2f7d5b;--acx:#fff;--bd:#e3ded4;--ok:#dff0e6;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171b18;--card:#222823;--tx:#eef2ee;--mu:#9aa59d;--ac:#5cc596;--acx:#0f1a14;--bd:#323a34;--ok:#243d2f;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#171b18;--card:#222823;--tx:#eef2ee;--mu:#9aa59d;--ac:#5cc596;--acx:#0f1a14;--bd:#323a34;--ok:#243d2f;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{--bg:#faf8f4;--card:#fff;--tx:#1f2a24;--mu:#6b756e;--ac:#2f7d5b;--acx:#fff;--bd:#e3ded4;--ok:#dff0e6;--warn:#f6e3c4;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171b18;--card:#222823;--tx:#eef2ee;--mu:#9aa59d;--ac:#5cc596;--acx:#0f1a14;--bd:#323a34;--ok:#243d2f;--warn:#4a3a20;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171b18;--card:#222823;--tx:#eef2ee;--mu:#9aa59d;--ac:#5cc596;--acx:#0f1a14;--bd:#323a34;--ok:#243d2f;--warn:#4a3a20;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:640px;margin:0 auto;padding:16px}
-h1{font-size:1.5rem;margin:8px 0 4px}h2{font-size:1.25rem;margin:8px 0}h3{font-size:1rem;margin:20px 0 8px}
-.sub{color:var(--mu);margin:0 0 16px}
-.card{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 14px;margin:0 0 10px;color:var(--tx);font:inherit;cursor:pointer}
-.card b{display:block}.card span{color:var(--mu);font-size:.85rem}
-.tag{display:inline-block;background:var(--ok);border-radius:99px;padding:1px 9px;font-size:.78rem;margin-right:6px;color:var(--tx)}
-button.b{background:var(--ac);color:var(--acx);border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer}
-button.g{background:transparent;color:var(--ac);border:1px solid var(--bd);border-radius:12px;padding:12px 18px;font:inherit;cursor:pointer}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+main{max-width:640px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top,0px)) 16px calc(96px + env(safe-area-inset-bottom,0px))}
+h1{font-size:1.5rem;margin:8px 0 4px}h2{font-size:1.3rem;margin:4px 0 6px;line-height:1.3}h3{font-size:1rem;margin:22px 0 8px}
+.sub{color:var(--mu);margin:0 0 14px}
+.card{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 14px;margin:0 0 10px;color:var(--tx);font:inherit;cursor:pointer}
+.card .ct{flex:1;min-width:0}.card b{display:block}.card span{color:var(--mu);font-size:.85rem}
+.card .fav{color:#e0a100;font-size:1.1rem}
+.tag{display:inline-block;background:var(--ok);border-radius:99px;padding:1px 9px;font-size:.78rem;margin-right:6px;color:var(--tx);font-style:normal}
+.tag.u{background:var(--warn)}
+button{font:inherit}
+button.b{background:var(--ac);color:var(--acx);border:0;border-radius:12px;padding:12px 18px;font-weight:600;cursor:pointer}
+button.g{background:transparent;color:var(--ac);border:1px solid var(--bd);border-radius:12px;padding:12px 18px;cursor:pointer}
+button.x{background:transparent;color:#c0392b;border:1px solid var(--bd);border-radius:12px;padding:12px 18px;cursor:pointer}
 button:disabled{opacity:.4}
-.back{background:none;border:0;color:var(--ac);font:inherit;padding:8px 0;cursor:pointer}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.back{background:none;border:0;color:var(--ac);padding:8px 0;cursor:pointer}
+.ico{background:none;border:0;font-size:1.5rem;padding:4px 8px;cursor:pointer;color:var(--tx);line-height:1}
+.ico.on{color:#e0a100}
+input[type=search],input[type=text],input[type=number],textarea,select{width:100%;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:12px;padding:11px 12px;font:inherit}
+textarea{resize:vertical;min-height:90px}
+label.f{display:block;font-weight:600;margin:14px 0 6px}
+.hint{color:var(--mu);font-size:.85rem;font-weight:400}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 4px;margin:0 -16px 6px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:99px;padding:6px 13px;font-size:.9rem;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--ac);color:var(--acx);border-color:var(--ac)}
+.row{display:flex;gap:10px;align-items:center}
+.row select{flex:1}
+.stp{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:4px;margin:6px 0 0;width:max-content}
+.stp button{width:40px;height:40px;border:0;border-radius:9px;background:var(--ok);color:var(--tx);font-size:1.3rem;cursor:pointer}
+.stp b{min-width:120px;text-align:center}
+ul.ing{list-style:none;padding:0;margin:0}
+ul.ing li{padding:9px 0;border-bottom:1px solid var(--bd)}
 label.i{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--bd);cursor:pointer}
-label.i input{width:20px;height:20px;margin-top:2px;accent-color:var(--ac)}
+label.i input{width:22px;height:22px;margin-top:1px;accent-color:var(--ac);flex:none}
 label.i.d span{text-decoration:line-through;color:var(--mu)}
-.step{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;font-size:1.1rem;min-height:120px}
+.step{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;font-size:1.25rem;line-height:1.55;min-height:170px;touch-action:pan-y}
+.tm{display:inline-block;background:var(--ac);color:var(--acx);border:0;border-radius:99px;padding:2px 10px;font-size:1rem;font-weight:600;cursor:pointer;margin:0 2px}
 .nav{display:flex;gap:10px;margin-top:12px}.nav button{flex:1}
 .prog{height:6px;background:var(--bd);border-radius:9px;margin:10px 0}.prog i{display:block;height:100%;background:var(--ac);border-radius:9px}
-.tabs{display:flex;gap:8px;margin:12px 0}.tabs button{flex:1}
-.tabs .on{background:var(--ac);color:var(--acx)}
+.tabs{display:flex;gap:8px;margin:14px 0 4px}.tabs button{flex:1;padding:10px}
+.tabs .on{background:var(--ac);color:var(--acx);border-color:var(--ac)}
+.grp{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:6px 14px 4px;margin:0 0 12px}
+.grp .top b{font-size:1rem}
+.grp label.i:last-child{border-bottom:0}
+.empty{text-align:center;color:var(--mu);padding:30px 10px}
+.small{font-size:.85rem;color:var(--mu)}
+#bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+#bar button{flex:1;background:none;border:0;color:var(--mu);padding:8px 0 9px;font-size:.78rem;cursor:pointer;position:relative}
+#bar button i{display:block;font-style:normal;font-size:1.35rem;line-height:1.2}
+#bar button.on{color:var(--ac);font-weight:600}
+#bar .bdg{position:absolute;top:3px;left:calc(50% + 8px);background:#c0392b;color:#fff;border-radius:99px;font-size:.7rem;padding:0 6px;font-weight:600}
+#tb{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none;padding:0 12px}
+#tb div{pointer-events:auto;display:flex;align-items:center;gap:10px;background:var(--tx);color:var(--bg);border-radius:99px;padding:7px 8px 7px 16px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-weight:600;max-width:100%}
+#tb div.ring{background:#c0392b;color:#fff}
+#tb button{background:rgba(127,127,127,.3);color:inherit;border:0;border-radius:99px;padding:4px 11px;cursor:pointer;font-weight:600}
+.toast{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:9px 16px;border-radius:99px;z-index:9;font-size:.9rem;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.cv{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;flex:none}
+.cv.il{background:radial-gradient(circle at 25% 15%,hsl(var(--h) 70% 80%),hsl(var(--h) 45% 52%))}
+.cv.t{width:64px;height:64px;border-radius:12px;font-size:15px}
+.cv.h{width:100%;height:200px;border-radius:18px;font-size:44px;margin:4px 0 12px}
+.pl{width:3.6em;height:3.6em;border-radius:50%;background:radial-gradient(circle,#fff 58%,#efece5 59%,#fbfaf7 72%);box-shadow:0 .12em .35em rgba(0,0,0,.28);position:relative}
+.pl span{position:absolute;line-height:1;filter:drop-shadow(0 .03em .05em rgba(0,0,0,.25))}
+.pl span:nth-child(1){font-size:1.75em;left:10%;top:18%}
+.pl span:nth-child(2){font-size:1.3em;right:6%;bottom:8%}
+.cv .d{position:absolute;opacity:.28;font-size:.7em;line-height:1}
+.cv .pb{position:absolute;right:10px;bottom:10px;display:flex;gap:6px}
+.cv .pb button{background:rgba(0,0,0,.55);color:#fff;border:0;border-radius:99px;padding:6px 12px;font-size:.85rem;cursor:pointer}
+.flt{display:flex;gap:8px;margin:2px 0 10px}.flt select{flex:1;min-width:0;padding:9px 8px;font-size:.88rem}
+#fab{position:fixed;right:18px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:18px;border:0;background:var(--ac);color:var(--acx);font-size:1.8rem;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;z-index:4}
+details.nc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;margin:14px 0 0}
+details.nc summary{cursor:pointer;font-weight:600}
+details.nc table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:8px}
+details.nc td{padding:5px 0;border-top:1px solid var(--bd)}details.nc td:last-child{text-align:right;white-space:nowrap;padding-left:10px}
+.kpi{display:flex;gap:10px;margin:10px 0 0}.kpi div{flex:1;background:var(--ok);border-radius:12px;padding:8px 12px}.kpi b{display:block;font-size:1.25rem}.kpi span{font-size:.8rem;color:var(--mu)}
+.rc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.rc span{background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:4px 6px 4px 12px;font-size:.88rem;display:flex;align-items:center;gap:4px}
+.rc button{background:none;border:0;color:var(--mu);font-size:1rem;cursor:pointer;padding:0 4px}
+.aisle{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mu);margin:16px 0 4px;font-weight:600}
+.card{padding:8px 12px 8px 8px}
 </style>
 </head>
 <body><main id="app"></main>
+<div id="tb"></div><button id="fab" aria-label="Ajouter une recette" hidden>＋</button>
+<nav id="bar"><button data-v="" id="nR"><i>📖</i>Recettes</button><button data-v="#list" id="nL"><i>🛒</i>Courses</button><button data-v="#more" id="nM"><i>⚙️</i>Plus</button></nav>
 <script>
 var R=[
-{t:"Omelette épinards-chèvre",a:"Plaque",g:5,m:"10 min",i:["4 œufs","150 g d’épinards frais","60 g de chèvre frais","1 c. à soupe d’huile d’olive","Sel, poivre, muscade"],s:["Fais tomber les épinards 2 min dans l’huile d’olive, puis égoutte-les bien.","Bats les œufs avec sel, poivre et une pointe de muscade.","Ajoute les épinards et le chèvre en morceaux.","Cuis à feu moyen-doux 4 à 5 min, à couvert.","Replie l’omelette et sers."]},
-{t:"Poulet crémeux champignons-moutarde",a:"Cookeo",g:6,m:"20 min",i:["2 blancs de poulet (300 g)","250 g de champignons","1 échalote","10 cl de crème","1 c. à soupe de moutarde","10 cl de bouillon","Sel, poivre"],s:["Coupe le poulet en dés, émince l’échalote et les champignons.","Mode dorer : poulet 4 min, puis échalote et champignons 3 min.","Ajoute le bouillon, ferme et cuis 8 min sous pression.","Libère la vapeur et remue avec la crème et la moutarde.","Laisse réduire 2 min en mode dorer, rectifie l’assaisonnement."]},
-{t:"Saumon et brocolis rôtis",a:"Air fryer",g:8,m:"20 min",i:["2 pavés de saumon","300 g de brocoli en bouquets","1 c. à soupe d’huile","1 citron","Ail en poudre, sel, poivre"],s:["Enrobe le brocoli d’huile, d’ail en poudre, de sel et de poivre.","Cuis 4 min à 200 °C.","Ajoute les pavés de saumon, remue le brocoli.","Cuis encore 8 min.","Termine avec le jus de citron."]},
-{t:"Velouté courgette-chèvre, œufs mollets",a:"Robot Moulinex",g:9,m:"35 min",i:["600 g de courgettes","1 oignon","400 ml de bouillon","80 g de chèvre frais","Basilic","2 œufs","Sel, poivre"],s:["Coupe les courgettes et l’oignon en morceaux.","Mets-les dans le bol avec le bouillon et le chèvre. Lance le programme soupe/velouté (environ 25 min).","Mixe jusqu’à obtenir une texture lisse, ajoute le basilic.","Pendant ce temps, cuis les œufs 6 min 30 dans l’eau bouillante, puis écale-les.","Sers le velouté avec un œuf mollet posé dessus."]},
-{t:"Boulettes de bœuf, sauce tomate-courgettes",a:"Air fryer + plaque",g:10,m:"30 min",i:["300 g de bœuf haché 5 %","1 œuf","20 g de parmesan","Persil","1 petit oignon","200 g de passata","2 courgettes","Sel, poivre"],s:["Mélange la viande, l’œuf, le parmesan, le persil et l’oignon haché. Forme des boulettes.","Cuis-les 12 min à 180 °C à l’air fryer.","Taille les courgettes en spaghettis.","Chauffe la passata 5 min, ajoute les courgettes 3 min.","Ajoute les boulettes dans la sauce et sers."]},
-{t:"Riz de chou-fleur sauté aux crevettes",a:"Robot + plaque",g:9,m:"20 min",i:["400 g de chou-fleur","250 g de crevettes décortiquées","2 œufs","2 gousses d’ail","1 c. à soupe de sauce soja","1 c. à soupe d’huile"],s:["Hache le chou-fleur par impulsions de 3 à 4 s pour obtenir une semoule.","Fais sauter les crevettes avec l’ail 3 min, puis retire-les.","Fais sauter le chou-fleur 5 min.","Pousse sur le côté et brouille les œufs.","Remets les crevettes, ajoute la sauce soja et mélange."]},
-{t:"Cuisses de poulet moutarde, haricots verts",a:"Air fryer",g:6,m:"35 min",i:["4 cuisses de poulet","2 c. à soupe de moutarde","1 c. à soupe d’huile d’olive","300 g de haricots verts","Paprika, sel, poivre"],s:["Badigeonne les cuisses de moutarde, huile, paprika, sel et poivre.","Cuis 20 min à 190 °C en les retournant à mi-cuisson.","Mélange les haricots verts avec un peu d’huile, sel et poivre.","Ajoute-les dans le panier et cuis encore 8 à 10 min.","Vérifie que le poulet est bien cuit à cœur, puis sers."]},
-{t:"Cabillaud en papillote, courgettes citronnées",a:"Air fryer",g:5,m:"25 min",i:["2 dos de cabillaud","2 courgettes","1 citron","1 c. à soupe d’huile d’olive","Aneth ou persil","Sel, poivre"],s:["Coupe les courgettes en rondelles fines.","Prépare 2 feuilles de papier cuisson : courgettes au centre, cabillaud dessus.","Ajoute huile, jus et zeste de citron, herbes, sel et poivre.","Ferme les papillotes et cuis 15 min à 180 °C.","Ouvre avec précaution (vapeur) et sers."]},
-{t:"Curry de poulet coco-épinards",a:"Cookeo",g:10,m:"25 min",i:["300 g de blanc de poulet","200 g d’épinards frais","20 cl de lait de coco","1 oignon","1 c. à soupe de pâte de curry","1 c. à soupe d’huile","Sel"],s:["Coupe le poulet en dés et émince l’oignon.","Mode dorer : oignon et poulet 4 min avec l’huile.","Ajoute la pâte de curry, mélange 1 min.","Verse le lait de coco, ferme et cuis 7 min sous pression.","Libère la vapeur, ajoute les épinards et remue 2 min en mode dorer."]},
-{t:"Gratin de chou-fleur au jambon",a:"Cookeo + air fryer",g:9,m:"30 min",i:["500 g de chou-fleur en bouquets","3 tranches de jambon","15 cl de crème","60 g d’emmental râpé","Muscade, sel, poivre"],s:["Cuis le chou-fleur 3 min sous pression dans le Cookeo avec un verre d’eau, puis égoutte.","Dispose chou-fleur et jambon coupé en lanières dans un plat.","Mélange la crème avec muscade, sel et poivre, verse sur le plat.","Parsème d’emmental.","Gratine 8 à 10 min à 190 °C à l’air fryer."]},
-{t:"Salade César au poulet, sans croûtons",a:"Plaque",g:6,m:"20 min",i:["2 blancs de poulet","1 romaine","2 œufs","30 g de parmesan","3 c. à soupe de yaourt grec","1 c. à soupe de moutarde","Jus de citron, ail, huile"],s:["Cuis le poulet à la poêle 5 à 6 min de chaque côté, puis tranche-le.","Cuis les œufs 9 min, écale-les et coupe-les en quartiers.","Mélange yaourt, moutarde, jus de citron, ail râpé et un filet d’huile.","Déchire la romaine dans un saladier avec la sauce.","Ajoute poulet, œufs et copeaux de parmesan."]},
-{t:"Œufs cocotte champignons-jambon",a:"Air fryer",g:4,m:"20 min",i:["4 œufs","150 g de champignons","2 tranches de jambon","4 c. à soupe de crème","Ciboulette, sel, poivre"],s:["Fais revenir les champignons émincés 4 min à la poêle.","Répartis champignons et jambon coupé dans 2 ramequins.","Ajoute 2 c. à soupe de crème, puis casse 2 œufs dans chaque ramequin.","Sale, poivre et cuis 8 à 10 min à 180 °C à l’air fryer.","Parsème de ciboulette."]}
+{t:"Omelette épinards-chèvre",a:"Plaque",m:"10 min",e:["🥚","🥬"],h:95,i:["4 œufs","150 g d’épinards frais","60 g de chèvre frais","1 c. à soupe d’huile d’olive","Sel, poivre, muscade"],s:["Fais tomber les épinards 2 min dans l’huile d’olive, puis égoutte-les bien.","Bats les œufs avec sel, poivre et une pointe de muscade.","Ajoute les épinards et le chèvre en morceaux.","Cuis à feu moyen-doux 4 à 5 min, à couvert.","Replie l’omelette et sers."]},
+{t:"Poulet crémeux champignons-moutarde",a:"Cookeo",m:"20 min",e:["🍗","🍄"],h:38,i:["2 blancs de poulet (300 g)","250 g de champignons","1 échalote","10 cl de crème","1 c. à soupe de moutarde","10 cl de bouillon","Sel, poivre"],s:["Coupe le poulet en dés, émince l’échalote et les champignons.","Mode dorer : poulet 4 min, puis échalote et champignons 3 min.","Ajoute le bouillon, ferme et cuis 8 min sous pression.","Libère la vapeur et remue avec la crème et la moutarde.","Laisse réduire 2 min en mode dorer, rectifie l’assaisonnement."]},
+{t:"Saumon et brocolis rôtis",a:"Air fryer",m:"20 min",e:["🐟","🥦"],h:15,i:["2 pavés de saumon","300 g de brocoli en bouquets","1 c. à soupe d’huile","1 citron","Ail en poudre, sel, poivre"],s:["Enrobe le brocoli d’huile, d’ail en poudre, de sel et de poivre.","Cuis 4 min à 200 °C.","Ajoute les pavés de saumon, remue le brocoli.","Cuis encore 8 min.","Termine avec le jus de citron."]},
+{t:"Velouté courgette-chèvre, œufs mollets",a:"Robot Moulinex",m:"35 min",e:["🥒","🥚"],h:110,i:["600 g de courgettes","1 oignon","400 ml de bouillon","80 g de chèvre frais","Basilic","2 œufs","Sel, poivre"],s:["Coupe les courgettes et l’oignon en morceaux.","Mets-les dans le bol avec le bouillon et le chèvre. Lance le programme soupe/velouté (environ 25 min).","Mixe jusqu’à obtenir une texture lisse, ajoute le basilic.","Pendant ce temps, cuis les œufs 6 min 30 dans l’eau bouillante, puis écale-les.","Sers le velouté avec un œuf mollet posé dessus."]},
+{t:"Boulettes de bœuf, sauce tomate-courgettes",a:"Air fryer + plaque",m:"30 min",e:["🧆","🍅"],h:5,i:["300 g de bœuf haché 5 %","1 œuf","20 g de parmesan","Persil","1 petit oignon","200 g de passata","2 courgettes","Sel, poivre"],s:["Mélange la viande, l’œuf, le parmesan, le persil et l’oignon haché. Forme des boulettes.","Cuis-les 12 min à 180 °C à l’air fryer.","Taille les courgettes en spaghettis.","Chauffe la passata 5 min, ajoute les courgettes 3 min.","Ajoute les boulettes dans la sauce et sers."]},
+{t:"Riz de chou-fleur sauté aux crevettes",a:"Robot + plaque",m:"20 min",e:["🦐","🥚"],h:25,i:["400 g de chou-fleur","250 g de crevettes décortiquées","2 œufs","2 gousses d’ail","1 c. à soupe de sauce soja","1 c. à soupe d’huile"],s:["Hache le chou-fleur par impulsions de 3 à 4 s pour obtenir une semoule.","Fais sauter les crevettes avec l’ail 3 min, puis retire-les.","Fais sauter le chou-fleur 5 min.","Pousse sur le côté et brouille les œufs.","Remets les crevettes, ajoute la sauce soja et mélange."]},
+{t:"Cuisses de poulet moutarde, haricots verts",a:"Air fryer",m:"35 min",e:["🍗","🫛"],h:48,i:["4 cuisses de poulet","2 c. à soupe de moutarde","1 c. à soupe d’huile d’olive","300 g de haricots verts","Paprika, sel, poivre"],s:["Badigeonne les cuisses de moutarde, huile, paprika, sel et poivre.","Cuis 20 min à 190 °C en les retournant à mi-cuisson.","Mélange les haricots verts avec un peu d’huile, sel et poivre.","Ajoute-les dans le panier et cuis encore 8 à 10 min.","Vérifie que le poulet est bien cuit à cœur, puis sers."]},
+{t:"Cabillaud en papillote, courgettes citronnées",a:"Air fryer",m:"25 min",e:["🐟","🍋"],h:195,i:["2 dos de cabillaud","2 courgettes","1 citron","1 c. à soupe d’huile d’olive","Aneth ou persil","Sel, poivre"],s:["Coupe les courgettes en rondelles fines.","Prépare 2 feuilles de papier cuisson : courgettes au centre, cabillaud dessus.","Ajoute huile, jus et zeste de citron, herbes, sel et poivre.","Ferme les papillotes et cuis 15 min à 180 °C.","Ouvre avec précaution (vapeur) et sers."]},
+{t:"Curry de poulet coco-épinards",a:"Cookeo",m:"25 min",e:["🍛","🥥"],h:42,i:["300 g de blanc de poulet","200 g d’épinards frais","20 cl de lait de coco","1 oignon","1 c. à soupe de pâte de curry","1 c. à soupe d’huile","Sel"],s:["Coupe le poulet en dés et émince l’oignon.","Mode dorer : oignon et poulet 4 min avec l’huile.","Ajoute la pâte de curry, mélange 1 min.","Verse le lait de coco, ferme et cuis 7 min sous pression.","Libère la vapeur, ajoute les épinards et remue 2 min en mode dorer."]},
+{t:"Gratin de chou-fleur au jambon",a:"Cookeo + air fryer",m:"30 min",e:["🧀","🍖"],h:50,i:["500 g de chou-fleur en bouquets","3 tranches de jambon","15 cl de crème","60 g d’emmental râpé","Muscade, sel, poivre"],s:["Cuis le chou-fleur 3 min sous pression dans le Cookeo avec un verre d’eau, puis égoutte.","Dispose chou-fleur et jambon coupé en lanières dans un plat.","Mélange la crème avec muscade, sel et poivre, verse sur le plat.","Parsème d’emmental.","Gratine 8 à 10 min à 190 °C à l’air fryer."]},
+{t:"Salade César au poulet, sans croûtons",a:"Plaque",m:"20 min",e:["🥗","🍗"],h:85,i:["2 blancs de poulet","1 romaine","2 œufs","30 g de parmesan","3 c. à soupe de yaourt grec","1 c. à soupe de moutarde","Jus de citron, ail, huile"],s:["Cuis le poulet à la poêle 5 à 6 min de chaque côté, puis tranche-le.","Cuis les œufs 9 min, écale-les et coupe-les en quartiers.","Mélange yaourt, moutarde, jus de citron, ail râpé et un filet d’huile.","Déchire la romaine dans un saladier avec la sauce.","Ajoute poulet, œufs et copeaux de parmesan."]},
+{t:"Œufs cocotte champignons-jambon",a:"Air fryer",m:"20 min",e:["🥚","🍄"],h:30,i:["4 œufs","150 g de champignons","2 tranches de jambon","4 c. à soupe de crème","Ciboulette, sel, poivre"],s:["Fais revenir les champignons émincés 4 min à la poêle.","Répartis champignons et jambon coupé dans 2 ramequins.","Ajoute 2 c. à soupe de crème, puis casse 2 œufs dans chaque ramequin.","Sale, poivre et cuis 8 à 10 min à 180 °C à l’air fryer.","Parsème de ciboulette."]},
+{t:"Chili con carne sans haricots",a:"Cookeo",m:"30 min",e:["🌶️","🥑"],h:2,i:["300 g de bœuf haché 5 %","1 poivron rouge","1 petit oignon","2 gousses d’ail","200 g de tomates concassées","1 c. à café de cumin","1 c. à café de paprika fumé","1 avocat","Sel, poivre"],s:["Émince l’oignon et l’ail, coupe le poivron en dés.","Mode dorer : fais revenir la viande 4 min, puis l’oignon, l’ail et le poivron 3 min.","Ajoute les épices, les tomates concassées et un demi-verre d’eau. Ferme et cuis 10 min sous pression.","Libère la vapeur et laisse réduire 3 min en mode dorer.","Sers avec l’avocat coupé en tranches."]},
+{t:"Tajine de poulet citron-olives",a:"Cookeo",m:"35 min",e:["🍋","🫒"],h:55,i:["4 hauts de cuisse de poulet (500 g)","1 oignon","1 citron confit","60 g d’olives vertes","1 c. à café de ras el hanout","15 cl de bouillon","Coriandre"],s:["Émince l’oignon, coupe le citron confit en quartiers.","Mode dorer : fais dorer le poulet 5 min, ajoute l’oignon 2 min.","Ajoute le ras el hanout, le citron confit, les olives et le bouillon.","Ferme et cuis 15 min sous pression.","Libère la vapeur, réduis la sauce 3 min en mode dorer et parsème de coriandre."]},
+{t:"Aubergines farcies bœuf-feta",a:"Air fryer",m:"40 min",e:["🍆","🧀"],h:280,i:["2 petites aubergines (400 g)","200 g de bœuf haché 5 %","100 g de passata","80 g de feta","1 gousse d’ail","Menthe, sel, poivre"],s:["Coupe les aubergines en deux, quadrille la chair et badigeonne d’un peu d’huile.","Cuis-les 15 min à 190 °C, chair vers le haut.","Pendant ce temps, fais revenir la viande et l’ail 5 min, ajoute la passata 3 min.","Évide un peu les aubergines, mélange la chair à la viande et garnis-les.","Émiette la feta dessus et cuis 8 min à 190 °C. Parsème de menthe."]},
+{t:"Brochettes de poulet tikka, raïta",a:"Air fryer",m:"25 min",e:["🍢","🥒"],h:22,i:["300 g de blanc de poulet","150 g de yaourt grec","1 c. à soupe d’épices tikka","150 g de concombre","1 citron","Menthe, sel"],s:["Coupe le poulet en cubes, mélange-le avec 50 g de yaourt, les épices, la moitié du jus de citron et du sel.","Enfile les cubes sur des piques (laisse mariner 15 min si tu as le temps).","Cuis 12 min à 200 °C en retournant à mi-cuisson.","Râpe le concombre, presse-le, puis mélange avec le reste du yaourt, la menthe et le jus de citron.","Sers les brochettes avec la raïta."]},
+{t:"Filet mignon, poireaux à la crème",a:"Cookeo",m:"35 min",e:["🥩","🧈"],h:70,i:["1 filet mignon de porc (400 g)","1 gros poireau (200 g)","10 cl de crème","1 c. à soupe de beurre","10 cl de bouillon","Thym, sel, poivre"],s:["Coupe le filet mignon en médaillons épais et émince le poireau.","Mode dorer : fais dorer les médaillons dans le beurre 4 min, puis retire-les.","Fais revenir le poireau 3 min, ajoute le bouillon et le thym, puis remets la viande.","Ferme et cuis 8 min sous pression.","Libère la vapeur, ajoute la crème et laisse réduire 2 min en mode dorer."]},
+{t:"Lasagnes de courgettes",a:"Air fryer",m:"45 min",e:["🥒","🍅"],h:12,i:["2 courgettes (400 g)","250 g de bœuf haché 5 %","150 g de passata","125 g de ricotta","1 mozzarella","Basilic, sel, poivre"],s:["Coupe les courgettes en fines lamelles dans la longueur, sale-les et laisse-les dégorger 10 min, puis sèche-les.","Fais revenir la viande 5 min, ajoute la passata et laisse mijoter 5 min.","Dans un plat qui rentre dans l’air fryer, alterne courgettes, sauce, ricotta. Termine par la mozzarella en tranches.","Cuis 20 min à 170 °C (couvre de papier alu les 10 premières minutes).","Laisse reposer 5 min et parsème de basilic."]},
+{t:"Shakshuka à la feta",a:"Plaque",m:"25 min",e:["🍳","🍅"],h:8,i:["4 œufs","1 poivron rouge","1 petit oignon","2 gousses d’ail","250 g de tomates concassées","1 c. à café de cumin","1 c. à café de paprika","50 g de feta","Coriandre, sel, poivre"],s:["Fais revenir l’oignon, l’ail et le poivron émincés 5 min dans un peu d’huile.","Ajoute les épices, puis les tomates concassées. Laisse mijoter 8 min.","Creuse 4 puits et casse un œuf dans chacun.","Couvre et cuis 5 à 6 min, jusqu’à ce que les blancs soient pris.","Émiette la feta, parsème de coriandre et sers."]},
+{t:"Soupe thaï coco-crevettes",a:"Robot Moulinex",m:"25 min",e:["🦐","🥥"],h:170,i:["250 g de crevettes décortiquées","20 cl de lait de coco","50 cl de bouillon","150 g de champignons","1 c. à soupe de pâte de curry","1 morceau de gingembre","1 c. à soupe de nuoc-mâm","1 citron vert","Coriandre"],s:["Mets le bouillon, le lait de coco, la pâte de curry et le gingembre râpé dans le bol.","Lance un programme mijoté à 100 °C pendant 10 min.","Ajoute les champignons émincés et cuis 5 min.","Ajoute les crevettes et cuis encore 4 min, sans mixer.","Termine avec le nuoc-mâm, le jus de citron vert et la coriandre."]},
+{t:"Velouté de chou-fleur, lardons grillés",a:"Robot Moulinex",m:"35 min",e:["🥣","🥓"],h:45,i:["500 g de chou-fleur","1 petit oignon","50 cl de bouillon","10 cl de crème","100 g de lardons","Muscade, sel, poivre"],s:["Mets le chou-fleur en morceaux, l’oignon et le bouillon dans le bol.","Lance le programme soupe/velouté (environ 25 min).","Pendant ce temps, fais griller les lardons à sec 5 min à la poêle.","Ajoute la crème et la muscade, puis mixe jusqu’à obtenir un velouté lisse.","Sers avec les lardons grillés par-dessus."]},
+{t:"Steak haché, purée de céleri",a:"Cookeo",m:"25 min",e:["🥩","🥣"],h:32,i:["2 steaks hachés 5 % (250 g)","1 boule de céleri-rave (400 g)","20 g de beurre","5 cl de crème","Muscade, sel, poivre"],s:["Épluche le céleri et coupe-le en cubes.","Mets-le dans le Cookeo avec un verre d’eau, ferme et cuis 10 min sous pression.","Égoutte, puis écrase ou mixe avec le beurre, la crème, la muscade, sel et poivre.","Cuis les steaks 2 à 3 min de chaque côté à la poêle.","Sers les steaks avec la purée."]},
+{t:"Œufs brouillés saumon fumé-avocat",a:"Plaque",m:"10 min",e:["🍳","🥑"],h:150,i:["4 œufs","100 g de saumon fumé","1 avocat","1 c. à soupe de crème","10 g de beurre","Ciboulette, poivre"],s:["Bats les œufs avec la crème et du poivre.","Fais fondre le beurre à feu doux, verse les œufs.","Remue sans arrêt 3 à 4 min, retire du feu quand ils sont encore crémeux.","Coupe l’avocat en tranches et le saumon en lanières.","Dresse les œufs avec le saumon et l’avocat, parsème de ciboulette."]},
+{t:"Larb de bœuf en feuilles de laitue",a:"Plaque",m:"20 min",e:["🥬","🌶️"],h:120,i:["300 g de bœuf haché 5 %","1 échalote","1 citron vert","1 c. à soupe de nuoc-mâm","1 petit piment","150 g de concombre","1 laitue","Menthe, coriandre"],s:["Émince l’échalote et le piment, coupe le concombre en petits dés.","Fais revenir la viande 5 à 6 min à feu vif, sans matière grasse.","Hors du feu, ajoute l’échalote, le piment, le nuoc-mâm et le jus du citron vert.","Ajoute la menthe et la coriandre ciselées.","Sers dans les feuilles de laitue avec le concombre."]}
 ];
+R.forEach(function(r,k){r.id="b"+k});
+
+/* ---------- Données sauvegardées ---------- */
 var st={};try{st=JSON.parse(localStorage.getItem("lc")||"{}")}catch(e){}
-function save(){try{localStorage.setItem("lc",JSON.stringify(st))}catch(e){}}
-var app=document.getElementById("app"),cur=-1,tab="c",step=0;
-function home(){cur=-1;var h='<h1>Recettes low carb</h1><p class="sub">12 recettes pour 2 personnes · glucides par portion</p>';
-R.forEach(function(r,k){h+='<button class="card" data-k="'+k+'"><b>'+(k+1)+'. '+r.t+'</b><span><i class="tag">'+r.g+' g glucides</i>'+r.a+' · '+r.m+'</span></button>'});
+function fix(){["f","n","p","C"].forEach(function(k){if(!st[k]||typeof st[k]!="object"||Array.isArray(st[k]))st[k]={}});
+["L","X","u"].forEach(function(k){if(!Array.isArray(st[k]))st[k]=[]});
+Object.keys(st).forEach(function(k){if(/^i\d+$/.test(k))delete st[k]})}
+fix();
+function save(){try{localStorage.setItem("lc",JSON.stringify(st))}catch(e){toast("Mémoire pleine : sauvegarde impossible")}}
+function all(){return R.concat(st.u)}
+function byId(id){for(var a=all(),k=0;k<a.length;k++)if(a[k].id==id)return a[k];return null}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function norm(s){return String(s).toLowerCase().replace(/œ/g,"oe").normalize("NFD").replace(/[̀-ͯ]/g,"")}
+function por(id){return st.p[id]||2}
+function inList(id){for(var k=0;k<st.L.length;k++)if(st.L[k].id==id)return st.L[k];return null}
+function toast(t){document.querySelectorAll(".toast").forEach(function(x){x.remove()});var d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},1800)}
+function theme(){var t=st.theme||"";if(t)document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}
+theme();
+
+/* ---------- Photos (stockées sur le téléphone, disponibles hors ligne) ---------- */
+var P={},db=null;
+function idb(){return new Promise(function(ok){if(!window.indexedDB)return ok(null);var q=indexedDB.open("recettes",1);
+q.onupgradeneeded=function(){q.result.createObjectStore("ph")};q.onsuccess=function(){db=q.result;ok(db)};q.onerror=function(){ok(null)}})}
+function loadPhotos(){return idb().then(function(d){if(!d)return;return new Promise(function(ok){var tx=d.transaction("ph"),s=tx.objectStore("ph"),c=s.openCursor();
+c.onsuccess=function(){var cu=c.result;if(cu){P[cu.key]=cu.value;cu.continue()}else ok()};c.onerror=function(){ok()}})})}
+function putPhoto(id,v){if(v)P[id]=v;else delete P[id];if(!db)return;var tx=db.transaction("ph","readwrite");if(v)tx.objectStore("ph").put(v,id);else tx.objectStore("ph").delete(id)}
+function readPhoto(file){return new Promise(function(ok,ko){var u=URL.createObjectURL(file),img=new Image();
+img.onload=function(){var m=1000,sc=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL("image/jpeg",.8))};
+img.onerror=function(){URL.revokeObjectURL(u);ko()};img.src=u})}
+function hue(r){if(r.h!=null)return r.h;var h=0;for(var k=0;k<r.id.length;k++)h=(h*31+r.id.charCodeAt(k))%360;return h}
+function emo(r){return r.e&&r.e.length?r.e:["🍽️","🥗"]}
+function cover(r,big){
+if(P[r.id])return'<div class="cv '+(big?"h":"t")+'" style="background-image:url('+P[r.id]+')">'+(big?photoBtns(r):"")+"</div>";
+var e=emo(r),h='<div class="cv il '+(big?"h":"t")+'" style="--h:'+hue(r)+'">';
+if(big)[[8,10],[82,14],[6,70],[88,72],[30,82],[64,6]].forEach(function(p,k){h+='<span class="d" style="left:'+p[0]+'%;top:'+p[1]+'%;transform:rotate('+(k*47%60-30)+'deg)">'+e[k%e.length]+"</span>"});
+h+='<div class="pl"><span>'+e[0]+"</span><span>"+(e[1]||"")+"</span></div>"+(big?photoBtns(r):"")+"</div>";return h}
+function photoBtns(r){return'<div class="pb">'+(P[r.id]?'<button id="phx">Retirer</button>':"")+'<button id="ph">📷 '+(P[r.id]?"Changer":"Ma photo")+'</button></div><input type="file" id="phf" accept="image/*" hidden>'}
+
+/* ---------- Analyse des ingrédients & glucides nets ---------- */
+/* [motif, glucides nets pour 100 g, poids d’une unité en g, rayon] — valeurs moyennes approximatives */
+var NC=[
+[/lait de coco/,3,0,"E"],[/huile/,0,0,"E"],[/moutarde/,3,0,"E"],[/soja/,5,0,"E"],[/nuoc/,3,0,"E"],[/pate de curry/,12,0,"E"],[/bouillon/,.5,0,"E"],
+[/olive/,1,0,"E"],[/cumin|paprika|ras el hanout|curry|muscade|epice|tikka|garam|cannelle/,5,0,"E"],[/^sel|poivre/,0,0,"E"],
+[/epinard/,1.2,0,"L"],[/courgette/,2,200,"L"],[/brocoli/,3,300,"L"],[/chou-fleur|chou fleur/,3,800,"L"],[/champignon/,1.5,0,"L"],
+[/haricots? verts?/,4,0,"L"],[/echalote/,13,30,"L"],[/oignon/,6.5,100,"L"],[/^ail|\bail\b/,20,5,"L"],
+[/tomates? concassee|pulpe de tomate|tomates? pelee/,3.5,0,"L"],[/passata|coulis/,5,0,"L"],[/tomate/,3,120,"L"],
+[/poivron/,5,150,"L"],[/aubergine/,3,250,"L"],[/concombre/,2,300,"L"],[/romaine|laitue|salade|roquette|mache/,1.2,300,"L"],
+[/avocat/,2,150,"L"],[/celeri/,3,500,"L"],[/poireau/,5,200,"L"],[/citron vert/,7,30,"L"],[/citron confit/,1,60,"L"],[/citron/,7,40,"L"],
+[/gingembre/,10,10,"L"],[/piment/,6,10,"L"],[/asperge/,2,20,"L"],[/chou/,3.5,800,"L"],
+[/basilic|persil|coriandre|menthe|aneth|ciboulette|thym|herbe|romarin/,0,5,"L"],
+[/jambon/,1,40,"V"],[/lardon|bacon/,.5,0,"V"],[/blancs? de poulet/,0,150,"V"],[/hauts? de cuisse/,0,125,"V"],[/cuisses? de poulet/,0,200,"V"],
+[/paves? de saumon/,0,130,"V"],[/dos de cabillaud/,0,140,"V"],[/steaks? hache/,0,125,"V"],[/filet mignon/,0,400,"V"],
+[/poulet|boeuf|steak|saumon|cabillaud|crevette|gambas|porc|agneau|dinde|veau|thon|magret|poisson|truite|merlu|colin/,0,150,"V"],
+[/oeuf/,.7,55,"C"],[/creme/,3,0,"C"],[/chevre/,2,0,"C"],[/emmental|parmesan|gruyere|comte/,0,0,"C"],[/mozzarella/,1,125,"C"],
+[/feta/,1,200,"C"],[/ricotta/,3,250,"C"],[/yaourt/,4,125,"C"],[/beurre/,.5,0,"C"],[/fromage/,1,0,"C"],[/lait/,4.8,0,"C"]
+];
+var AIS={L:"Fruits & légumes",V:"Viandes & poissons",C:"Crèmerie & œufs",E:"Épicerie",Z:"Autres"};
+var UN="kg|g|ml|cl|l|c\\. ?à ?soupe|c\\. ?à ?café|c\\. ?à ?s\\.?|c\\. ?à ?c\\.?|cuill[eè]res? à soupe|cuill[eè]res? à café|gousses?|tranches?|pincées?|morceaux?|boules?|feuilles?|brins?";
+var PR=new RegExp("^(\\d+(?:[.,]\\d+)?)\\s*(?:("+UN+")(?![A-Za-zÀ-ÿ]))?\\s*(?:(?:de |d’|d')(?=\\S))?(.*)$","i");
+function unitKey(u){if(!u)return"";u=norm(u);if(/soupe|c\. ?a ?s/.test(u))return"cs";if(/cafe|c\. ?a ?c/.test(u))return"cc";return u.replace(/s$/,"")}
+function look(t){var n=norm(t);for(var k=0;k<NC.length;k++)if(NC[k][0].test(n))return NC[k];return null}
+function parse(s){var m=s.trim().match(PR),o={raw:s};
+if(!m){o.q=0;o.rest=s.trim();o.u=""}else{o.q=parseFloat(m[1].replace(",","."));o.u=m[2]||"";o.rest=m[3].trim()}
+var pg=o.rest.match(/\((\d+(?:[.,]\d+)?)\s*g\)/);o.pg=pg?parseFloat(pg[1].replace(",",".")):0;
+o.name=o.rest.replace(/\s*\(\d+(?:[.,]\d+)?\s*g\)/,"").trim();o.e=look(o.name);return o}
+function grams(o){if(!o.q)return 0;if(o.pg)return o.pg;var e=o.e,uk=unitKey(o.u),uw=e&&e[2]?e[2]:100;
+var f={g:1,kg:1000,ml:1,cl:10,l:1000,cs:15,cc:5,gousse:5,tranche:40,pincee:0,brin:0,feuille:5,morceau:e&&e[2]?e[2]:10,boule:uw}[uk];
+if(f!=null)return o.q*f;var n=norm(o.name),mul=/\bpetite?s?\b/.test(n)?.6:/\bgrosse?s?\b/.test(n)?1.5:1;return o.q*uw*mul}
+function carbLine(o){if(!o.q)return{v:0,known:true,seas:true};if(!o.e)return{v:0,known:false};return{v:grams(o)*o.e[1]/100,known:true}}
+var CC={};
+function nutri(r){var key=r.id+"|"+r.i.join("|");if(CC[key])return CC[key];
+var rows=r.i.map(function(x){var o=parse(x);return{o:o,c:carbLine(o)}}),tot=0,unk=0;
+rows.forEach(function(x){tot+=x.c.v;if(!x.c.known)unk++});
+return CC[key]={rows:rows,tot:tot,pp:tot/2,unk:unk}}
+function carbs(r){return r.gm!=null&&r.gm!==""?+r.gm:nutri(r).pp}
+function gtxt(v){return v<1?"< 1":String(Math.round(v))}
+function mins(r){var n=norm(r.m||""),h=n.match(/(\d+)\s*h/),m=n.match(/(\d+)\s*min/);var t=(h?+h[1]*60:0)+(m?+m[1]:0);return t||(parseInt(n)||0)}
+
+/* ---------- Quantités selon le nombre de personnes ---------- */
+function fmt(v,u){var r;u=unitKey(u);
+if((u=="g"||u=="ml")&&v>=20)r=String(Math.round(v/5)*5);
+else if(u=="kg"||u=="l"||u=="cl"){r=String(Math.round(v*10)/10).replace(".",",")}
+else{var h=Math.round(v*2)/2;if(h<=0)h=.5;var n=Math.floor(h);r=(n?n:"")+(h-n?(n?" ½":"½"):"")}
+return r}
+var INV=/^(dos|gros|frais|pois|noix|bras|riz|jus|maïs|fois|haut)$/i;
+function plurW(w,pl){if(INV.test(w)||w.length<3)return w;if(pl){if(/[sxz]$/i.test(w))return w;if(/(eau|au|eu)$/i.test(w))return w+"x";return w+"s"}
+if(/eaux$/i.test(w))return w.slice(0,-1);if(/s$/i.test(w)&&!/ss$/i.test(w))return w.slice(0,-1);return w}
+function plurSeg(s,pl){if(/^\s*(c\.|cuill|kg\b|g\b|ml\b|cl\b|l\b)/i.test(s))return s;var m=s.match(/^(.*?)(\s+de\s|\s+d’|\s+d'|\s*\(|,|\s+\d|$)/);
+return m[1].replace(/[A-Za-zÀ-ÿœ]+/g,function(w){return plurW(w,pl)})+s.slice(m[1].length)}
+function scaleIng(s,f){if(f==1)return s;var m=s.match(/^(\d+(?:[.,]\d+)?)(.*)$/),out=s;
+if(m){var q0=parseFloat(m[1].replace(",",".")),q=q0*f,tail=m[2],um=tail.match(/^\s*(kg|g|ml|cl|l)(?![A-Za-z0-9])/);
+if(!um&&/œuf/.test(tail))q=Math.max(1,Math.round(q));
+if(!um){var r1=Math.round(q*2)/2;if(r1>1&&q0<=1)tail=plurSeg(tail,true);else if(r1<=1&&q0>1)tail=plurSeg(tail,false)}
+out=fmt(q,um?um[1]:"")+tail}
+return out.replace(/\((\d+(?:[.,]\d+)?)(\s*)(kg|g|ml|cl|l)\)/g,function(_,num,sp,u){return"("+fmt(parseFloat(num.replace(",","."))*f,u)+sp+u+")"})}
+function ings(r){var f=por(r.id)/2;return r.i.map(function(x){return scaleIng(x,f)})}
+
+/* ---------- Navigation (le bouton retour d'Android fonctionne) ---------- */
+var depth=0,view={};
+function go(h,rep){var url=h||location.pathname+location.search;
+if(rep)history.replaceState({d:depth},"",url);else{depth++;history.pushState({d:depth},"",url)}render()}
+function back(){if(depth>0)history.back();else go("",true)}
+window.addEventListener("popstate",function(e){depth=(e.state&&e.state.d)||0;render()});
+var app=document.getElementById("app");
+document.querySelectorAll("#bar button").forEach(function(b){b.onclick=function(){var h=b.dataset.v,c=location.hash;if(c==h)return;
+if(!h){if(depth>0)history.go(-depth);else go("",true);return}
+go(h,/^#(list|more)$/.test(c))}});
+document.getElementById("fab").onclick=function(){go("#edit/new")};
+
+function render(){var h=location.hash.slice(1).split("/");lock(h[0]=="r"&&h[2]=="s");
+var v=h[0]||"home";
+document.getElementById("nR").className=(v=="home"||v=="r"||v=="edit")?"on":"";
+document.getElementById("nL").className=v=="list"?"on":"";
+document.getElementById("nM").className=v=="more"?"on":"";
+badge();
+var ok=true;
+if(v=="r"&&byId(h[1]))recipe(byId(h[1]),h[2]=="s");
+else if(v=="list")list();
+else if(v=="more")more();
+else if(v=="edit"&&(h[1]=="new"||(byId(h[1])&&h[1][0]=="u")))edit(h[1]=="new"?null:byId(h[1]));
+else{home();v="home"}
+document.getElementById("fab").hidden=v!="home";
+window.scrollTo(0,v=="home"?(view.y||0):0)}
+function badge(){var n=st.L.length,b=document.getElementById("nL");
+var o=b.querySelector(".bdg");if(o)o.remove();if(n)b.insertAdjacentHTML("beforeend",'<span class="bdg">'+n+"</span>")}
+
+/* ---------- Accueil : recherche, filtres, tri ---------- */
+var F={q:"",c:"",g:"",t:"",s:""};
+var CH=[["","Toutes"],["fav","★ Favoris"],["cookeo","Cookeo"],["air fryer","Air fryer"],["plaque","Plaque"],["robot","Robot"],["u","Mes recettes"]];
+function home(){var h='<h1>Recettes low carb</h1><p class="sub">'+all().length+' recettes · glucides nets par portion</p>';
+h+='<input type="search" id="q" placeholder="Recette ou ingrédient (ex. : saumon, feta…)" value="'+esc(F.q)+'">';
+h+='<div class="chips">'+CH.map(function(c){return'<button class="chip'+(F.c==c[0]?" on":"")+'" data-c="'+c[0]+'">'+c[1]+"</button>"}).join("")+"</div>";
+h+='<div class="flt"><select id="fg" aria-label="Glucides"><option value="">Glucides</option><option value="5">≤ 5 g / portion</option><option value="8">≤ 8 g / portion</option><option value="10">≤ 10 g / portion</option></select>';
+h+='<select id="ft" aria-label="Temps"><option value="">Temps</option><option value="15">≤ 15 min</option><option value="25">≤ 25 min</option><option value="35">≤ 35 min</option></select>';
+h+='<select id="so" aria-label="Tri"><option value="">Trier</option><option value="g">Moins de glucides</option><option value="m">Plus rapides</option><option value="t">A → Z</option></select></div><div id="res"></div>';
 app.innerHTML=h;
-app.querySelectorAll(".card").forEach(function(b){b.onclick=function(){cur=+b.dataset.k;tab="c";step=0;draw()}});window.scrollTo(0,0)}
-function draw(){var r=R[cur],h='<button class="back" id="bk">← Toutes les recettes</button><h2>'+r.t+'</h2><p class="sub"><i class="tag">'+r.g+' g glucides</i>'+r.a+' · '+r.m+'</p>';
-h+='<div class="tabs"><button class="g'+(tab=="c"?" on":"")+'" id="tc">Courses</button><button class="g'+(tab=="s"?" on":"")+'" id="ts">Étapes</button></div>';
-if(tab=="c"){var done=st["i"+cur]||{};h+='<h3>Ingrédients (2 personnes)</h3>';
-r.i.forEach(function(x,j){h+='<label class="i'+(done[j]?" d":"")+'"><input type="checkbox" data-j="'+j+'"'+(done[j]?" checked":"")+'><span>'+x+'</span></label>'});
-h+='<div class="nav"><button class="g" id="rz">Tout décocher</button><button class="b" id="go">Cuisiner →</button></div>'}
-else{var n=r.s.length;h+='<div class="prog"><i style="width:'+((step+1)/n*100)+'%"></i></div><p class="sub">Étape '+(step+1)+' sur '+n+'</p><div class="step">'+r.s[step]+'</div>';
-h+='<div class="nav"><button class="g" id="pv"'+(step==0?" disabled":"")+'>← Précédent</button><button class="b" id="nx"'+(step==n-1?" disabled":"")+'>Suivant →</button></div>';
-h+='<h3>Ingrédients</h3><ul>'+r.i.map(function(x){return"<li>"+x+"</li>"}).join("")+"</ul>"}
-app.innerHTML=h;window.scrollTo(0,0);
-document.getElementById("bk").onclick=home;
-document.getElementById("tc").onclick=function(){tab="c";draw()};
-document.getElementById("ts").onclick=function(){tab="s";draw()};
-if(tab=="c"){app.querySelectorAll("input").forEach(function(c){c.onchange=function(){var d=st["i"+cur]=st["i"+cur]||{};d[c.dataset.j]=c.checked;save();c.parentNode.classList.toggle("d",c.checked)}});
-document.getElementById("rz").onclick=function(){st["i"+cur]={};save();draw()};
-document.getElementById("go").onclick=function(){tab="s";step=0;draw()}}
-else{document.getElementById("pv").onclick=function(){step--;draw()};document.getElementById("nx").onclick=function(){step++;draw()}}}
-home();
+[["fg","g"],["ft","t"],["so","s"]].forEach(function(x){var e=document.getElementById(x[0]);e.value=F[x[1]];e.onchange=function(){F[x[1]]=e.value;results()}});
+var q=document.getElementById("q");q.oninput=function(){F.q=q.value;results()};
+app.querySelectorAll(".chip").forEach(function(b){b.onclick=function(){F.c=b.dataset.c;app.querySelectorAll(".chip").forEach(function(x){x.classList.toggle("on",x==b)});results()}});
+results()}
+function results(){var q=norm(F.q.trim()),a=all().filter(function(r){
+if(F.c=="fav"&&!st.f[r.id])return false;
+if(F.c=="u"&&r.id[0]!="u")return false;
+if(F.c&&F.c!="fav"&&F.c!="u"&&norm(r.a).indexOf(F.c)<0)return false;
+if(F.g&&Math.round(carbs(r))>+F.g)return false;
+if(F.t&&(mins(r)||999)>+F.t)return false;
+if(q&&q.split(/\s+/).some(function(w){return norm(r.t+" "+r.a+" "+r.i.join(" ")).indexOf(w)<0}))return false;return true});
+if(F.s=="g")a.sort(function(x,y){return carbs(x)-carbs(y)});
+if(F.s=="m")a.sort(function(x,y){return(mins(x)||999)-(mins(y)||999)});
+if(F.s=="t")a.sort(function(x,y){return x.t.localeCompare(y.t,"fr")});
+var h=a.map(function(r){return'<button class="card" data-id="'+r.id+'">'+cover(r)+'<div class="ct"><b>'+esc(r.t)+'</b><span><i class="tag">'+gtxt(carbs(r))+' g glucides</i>'+(r.id[0]=="u"?'<i class="tag u">perso</i>':"")+esc(r.a)+(r.m?" · "+esc(r.m):"")+"</span></div>"+(st.f[r.id]?'<span class="fav">★</span>':"")+(inList(r.id)?"<span>🛒</span>":"")+"</button>"}).join("");
+var res=document.getElementById("res");
+res.innerHTML=(a.length!=all().length?'<p class="small">'+a.length+" résultat"+(a.length>1?"s":"")+"</p>":"")+(h||'<p class="empty">Aucune recette ne correspond.</p>');
+res.querySelectorAll(".card").forEach(function(b){b.onclick=function(){view.y=window.scrollY;go("#r/"+b.dataset.id)}})}
+
+/* ---------- Fiche recette ---------- */
+function recipe(r,steps){var p=por(r.id),cp=carbs(r),nu=nutri(r);
+var h='<div class="top"><button class="back" id="bk">← Recettes</button><div>'+(r.id[0]=="u"?'<button class="ico" id="ed" aria-label="Modifier">✏️</button>':'')+'<button class="ico'+(st.f[r.id]?" on":"")+'" id="fv" aria-label="Favori">'+(st.f[r.id]?"★":"☆")+"</button></div></div>";
+if(!steps)h+=cover(r,true);
+h+="<h2>"+esc(r.t)+'</h2><p class="sub" style="margin:0">'+esc(r.a)+(r.m?" · "+esc(r.m):"")+"</p>";
+h+='<div class="stp"><button id="pm" aria-label="Moins"'+(p<=1?" disabled":"")+'>−</button><b>'+p+" personne"+(p>1?"s":"")+'</b><button id="pp" aria-label="Plus"'+(p>=6?" disabled":"")+">+</button></div>";
+h+='<div class="tabs"><button class="g'+(!steps?" on":"")+'" id="ti">Ingrédients</button><button class="g'+(steps?" on":"")+'" id="ts">Cuisiner</button></div>';
+if(!steps){var L=inList(r.id);
+h+='<div class="kpi"><div><b>'+gtxt(cp)+' g</b><span>glucides nets / portion</span></div><div><b>'+gtxt(cp*p)+' g</b><span>au total pour '+p+" pers.</span></div></div>";
+h+='<ul class="ing">'+ings(r).map(function(x){return"<li>"+esc(x)+"</li>"}).join("")+"</ul>";
+h+='<div class="nav"><button class="g" id="sl">'+(L?"✓ Dans la liste":"🛒 Ajouter aux courses")+'</button><button class="b" id="go">Cuisiner →</button></div>';
+var f=p/2;
+h+='<details class="nc"><summary>Détail des glucides nets ('+p+' pers.)</summary><table>'+nu.rows.map(function(x){return"<tr><td>"+esc(scaleIng(x.o.raw,f))+"</td><td>"+(x.c.seas?"—":x.c.known?(x.c.v*f<.5?"< 0,5":(Math.round(x.c.v*f*10)/10).toString().replace(".",","))+" g":"?")+"</td></tr>"}).join("")+'<tr><td><b>Total</b></td><td><b>'+gtxt(nu.tot*f)+" g</b></td></tr></table>";
+h+='<p class="small">Estimation calculée automatiquement à partir de valeurs moyennes (glucides hors fibres). Assaisonnements « — » négligeables'+(nu.unk?" ; « ? » = ingrédient non reconnu, compté 0":"")+'.'+(r.gm!=null&&r.gm!==""?" Pour cette recette, ta valeur manuelle ("+r.gm+" g) est utilisée.":"")+"</p></details>";
+h+='<h3>Mes notes</h3><textarea id="nt" placeholder="Variantes, réglages, avis…">'+esc(st.n[r.id]||"")+"</textarea>"}
+else{var n=r.s.length,k=Math.min(view.step||0,n-1);view.step=k;
+h+='<div class="prog"><i style="width:'+((k+1)/n*100)+'%"></i></div><p class="sub">Étape '+(k+1)+" sur "+n+(navigator.wakeLock?" · l’écran reste allumé":"")+'</p><div class="step" id="sp">'+timers(esc(r.s[k]))+"</div>";
+h+='<div class="nav"><button class="g" id="pv"'+(k==0?" disabled":"")+">← Précédent</button>"+(k<n-1?'<button class="b" id="nx">Suivant →</button>':'<button class="b" id="fin">Terminé ✓</button>')+"</div>";
+h+='<p class="small" style="text-align:center">Glisse à gauche ou à droite pour changer d’étape · touche un temps vert pour lancer un minuteur</p>';
+h+='<h3>Ingrédients ('+p+' pers.)</h3><ul class="ing">'+ings(r).map(function(x){return"<li>"+esc(x)+"</li>"}).join("")+"</ul>"}
+app.innerHTML=h;
+document.getElementById("bk").onclick=back;
+var e=document.getElementById("ed");if(e)e.onclick=function(){go("#edit/"+r.id)};
+document.getElementById("fv").onclick=function(){if(st.f[r.id])delete st.f[r.id];else{st.f[r.id]=1;toast("Ajoutée aux favoris")}save();render()};
+function setP(d){var q=Math.max(1,Math.min(6,por(r.id)+d));if(q==2)delete st.p[r.id];else st.p[r.id]=q;var L=inList(r.id);if(L)L.p=q;save();render()}
+document.getElementById("pm").onclick=function(){setP(-1)};document.getElementById("pp").onclick=function(){setP(1)};
+document.getElementById("ti").onclick=function(){go("#r/"+r.id,true)};
+document.getElementById("ts").onclick=function(){view.step=0;go("#r/"+r.id+"/s",true)};
+if(!steps){
+var pf=document.getElementById("phf");document.getElementById("ph").onclick=function(){pf.click()};
+pf.onchange=function(){var fl=pf.files[0];if(!fl)return;readPhoto(fl).then(function(d){putPhoto(r.id,d);toast("Photo enregistrée");render()}).catch(function(){toast("Image illisible")})};
+var px=document.getElementById("phx");if(px)px.onclick=function(){if(confirm("Retirer ta photo pour ce plat ?")){putPhoto(r.id,null);render()}};
+document.getElementById("go").onclick=function(){view.step=0;go("#r/"+r.id+"/s",true)};
+document.getElementById("sl").onclick=function(){if(inList(r.id))go("#list");else{st.L.push({id:r.id,p:por(r.id)});save();badge();toast("Ajoutée à la liste de courses");render()}};
+var nt=document.getElementById("nt");nt.oninput=function(){if(nt.value.trim())st.n[r.id]=nt.value;else delete st.n[r.id];save()}}
+else{
+function mv(d){var k=view.step+d;if(k<0||k>=r.s.length)return;view.step=k;render()}
+document.getElementById("pv").onclick=function(){mv(-1)};
+var nx=document.getElementById("nx");if(nx)nx.onclick=function(){mv(1)};
+var fi=document.getElementById("fin");if(fi)fi.onclick=function(){toast("Bon appétit !");view.step=0;go("#r/"+r.id,true)};
+var sp=document.getElementById("sp"),x0=null,y0=0;
+sp.addEventListener("touchstart",function(ev){x0=ev.touches[0].clientX;y0=ev.touches[0].clientY},{passive:true});
+sp.addEventListener("touchend",function(ev){if(x0==null)return;var dx=ev.changedTouches[0].clientX-x0,dy=ev.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)mv(dx<0?1:-1)});
+app.querySelectorAll(".tm").forEach(function(b){b.onclick=function(){startT(+b.dataset.s,"Étape "+(view.step+1)+" · "+b.dataset.l)}})}}
+
+/* ---------- Écran allumé pendant la cuisine ---------- */
+var wl=null,wantWl=false;
+function lock(on){wantWl=on;if(on&&!wl&&navigator.wakeLock){navigator.wakeLock.request("screen").then(function(l){wl=l;l.addEventListener("release",function(){wl=null});if(!wantWl){l.release()}}).catch(function(){})}
+if(!on&&wl){wl.release().catch(function(){});wl=null}}
+document.addEventListener("visibilitychange",function(){if(document.visibilityState=="visible"){if(wantWl)lock(true);tick()}});
+
+/* ---------- Minuteurs ---------- */
+function timers(s){return s.replace(/(\d+)(?:\s*à\s*(\d+))?\s*min(?:utes?)?(?![a-z])(?:\s*(\d+)(?![\d°]))?/g,function(m,a,b,sec){var t=(+a)*60+(sec?+sec:0);return'<button class="tm" data-s="'+t+'" data-l="'+m+'">⏱ '+m+"</button>"})}
+var T=[],ti=null,ac=null,tb=document.getElementById("tb");
+tb.onclick=function(e){var b=e.target.closest("button");if(!b)return;T=T.filter(function(t){return String(t.id)!=b.dataset.id});tick()};
+function startT(sec,label){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();ac.resume()}catch(e){}
+T.push({id:String(Date.now()),l:label,end:Date.now()+sec*1000});toast("Minuteur lancé : "+label.split(" · ")[1]);tick()}
+function beep(){try{var t=ac.currentTime;for(var k=0;k<3;k++){var o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;o.connect(g);g.connect(ac.destination);g.gain.setValueAtTime(.0001,t+k*.5);g.gain.exponentialRampToValueAtTime(.4,t+k*.5+.02);g.gain.exponentialRampToValueAtTime(.0001,t+k*.5+.35);o.start(t+k*.5);o.stop(t+k*.5+.4)}}catch(e){}}
+function tick(){var now=Date.now(),h="";
+T.forEach(function(t){var left=Math.max(0,Math.round((t.end-now)/1000));
+if(!left&&!t.rung){t.rung=1;t.ring=now}
+if(t.rung&&now-t.ring<60000&&(now-t.ring)%4000<1100){beep();if(navigator.vibrate)navigator.vibrate([300,150,300])}
+h+='<div class="'+(t.rung?"ring":"")+'"><span>'+(t.rung?"⏰ "+esc(t.l)+" — terminé":esc(t.l.split(" · ")[0])+" · "+Math.floor(left/60)+":"+("0"+left%60).slice(-2))+'</span><button data-id="'+t.id+'">'+(t.rung?"OK":"✕")+"</button></div>"});
+if(tb.innerHTML!==h)tb.innerHTML=h;
+if(T.length&&!ti)ti=setInterval(tick,1000);if(!T.length&&ti){clearInterval(ti);ti=null}}
+
+/* ---------- Liste de courses : ingrédients regroupés par rayon ---------- */
+function deOf(name){return/^[aeiouyhâéèêîôœ]/i.test(name)?"d’"+name:"de "+name}
+function shop(){var M={},order=[];
+st.L.forEach(function(L){var r=byId(L.id);if(!r)return;var f=(L.p||2)/2;
+r.i.forEach(function(x){var o=parse(x),uk=unitKey(o.u),q=o.q*f,pg=o.pg*f;
+if(uk=="kg"){uk="g";q*=1000}if(uk=="l"){uk="ml";q*=1000}if(uk=="cl"){uk="ml";q*=10}
+var key=norm(o.name).split(/\s+/).map(function(w){return w.replace(/[sx]$/,"")}).join(" ")+"|"+(o.q?uk:"-");
+if(!M[key]){M[key]={k:key,q:0,pg:0,u:uk,ou:o.u,name:o.name,has:!!o.q,ais:o.e?o.e[3]:"Z",from:[]};order.push(key)}
+var it=M[key];it.q+=q;it.pg+=pg;if(it.from.indexOf(r.t)<0)it.from.push(r.t)})});
+return order.map(function(k){var it=M[k],t;
+if(!it.has)t=it.name;
+else{var u=it.u,uq=/oeuf/.test(k)&&!u?Math.max(1,Math.round(it.q)):it.q,lab="";
+if(u=="g"){if(uq>=1000){lab="kg";uq/=1000}else lab="g"}
+else if(u=="ml"){if(uq>=1000){lab="l";uq/=1000}else{lab="cl";uq/=10}}
+else if(u)lab=it.ou.replace(/s$/,"")+(uq>1&&/^(gousse|tranche|pincée|morceau|boule|feuille|brin)$/.test(it.ou.replace(/s$/,""))?(/eau$/.test(it.ou.replace(/s$/,""))?"x":"s"):"");
+var qs=lab=="kg"||lab=="l"||lab=="cl"?fmt(uq,lab):fmt(uq,lab||"");
+t=qs+" "+(lab?lab+" "+deOf(it.name):plurSeg(it.name,Math.round(uq*2)/2>1))+(it.pg?" ("+Math.round(it.pg/5)*5+" g)":"")}
+return{k:k,t:t,ais:it.ais,from:it.from}})}
+function list(){var h='<h1>Liste de courses</h1>';
+st.L=st.L.filter(function(L){return byId(L.id)});
+if(!st.L.length&&!st.X.length)h+='<p class="empty">Ta liste est vide.<br>Ouvre une recette et touche « 🛒 Ajouter aux courses ».<br>Les ingrédients de toutes les recettes choisies sont regroupés par rayon.</p>';
+if(st.L.length)h+='<p class="sub">'+st.L.length+" recette"+(st.L.length>1?"s":"")+" choisie"+(st.L.length>1?"s":"")+' :</p><div class="rc">'+st.L.map(function(L,n){return"<span>"+esc(byId(L.id).t)+" · "+(L.p||2)+' p.<button data-rm="'+n+'" aria-label="Retirer">✕</button></span>'}).join("")+"</div>";
+var items=shop();
+["L","V","C","E","Z"].forEach(function(a){var its=items.filter(function(x){return x.ais==a});if(!its.length)return;
+h+='<p class="aisle">'+AIS[a]+'</p><div class="grp">'+its.map(function(x){var d=st.C[x.k];return'<label class="i'+(d?" d":"")+'"><input type="checkbox" data-k="'+esc(x.k)+'"'+(d?" checked":"")+"><span>"+esc(x.t)+(x.from.length>1?'<br><span class="small">'+x.from.length+" recettes</span>":"")+"</span></label>"}).join("")+"</div>"});
+h+='<p class="aisle">Autres articles</p><div class="grp">';
+st.X.forEach(function(x,k){h+='<label class="i'+(x.d?" d":"")+'"><input type="checkbox" data-x="'+k+'"'+(x.d?" checked":"")+"><span>"+esc(x.t)+"</span></label>"});
+h+='<div class="row" style="padding:8px 0 10px"><input type="text" id="xa" placeholder="Ajouter un article (ex. : lait)"><button class="b" id="xb">＋</button></div></div>';
+if(st.L.length||st.X.length)h+='<div class="nav"><button class="g" id="sh">Partager</button><button class="g" id="uc">Tout décocher</button></div><div class="nav"><button class="x" id="vd">Vider la liste</button></div>';
+app.innerHTML=h;
+app.querySelectorAll("[data-rm]").forEach(function(b){b.onclick=function(){st.L.splice(+b.dataset.rm,1);save();render()}});
+app.querySelectorAll("input[data-k]").forEach(function(c){c.onchange=function(){if(c.checked)st.C[c.dataset.k]=1;else delete st.C[c.dataset.k];save();c.parentNode.classList.toggle("d",c.checked)}});
+app.querySelectorAll("input[data-x]").forEach(function(c){c.onchange=function(){st.X[+c.dataset.x].d=c.checked;save();c.parentNode.classList.toggle("d",c.checked)}});
+var xa=document.getElementById("xa");
+function addX(){var t=xa.value.trim();if(!t)return;st.X.push({t:t});save();render();var e=document.getElementById("xa");e&&e.focus()}
+document.getElementById("xb").onclick=addX;xa.onkeydown=function(e){if(e.key=="Enter")addX()};
+if(!document.getElementById("sh"))return;
+document.getElementById("uc").onclick=function(){st.C={};st.X.forEach(function(x){x.d=false});save();render()};
+document.getElementById("vd").onclick=function(){if(confirm("Vider toute la liste de courses ?")){st.L=[];st.X=[];st.C={};save();render()}};
+document.getElementById("sh").onclick=function(){var t="🛒 Liste de courses\n";
+["L","V","C","E","Z"].forEach(function(a){var its=items.filter(function(x){return x.ais==a&&!st.C[x.k]});if(its.length)t+="\n"+AIS[a]+"\n"+its.map(function(x){return"- "+x.t}).join("\n")+"\n"});
+var ox=st.X.filter(function(x){return!x.d});if(ox.length)t+="\nAutres\n"+ox.map(function(x){return"- "+x.t}).join("\n")+"\n";
+if(navigator.share)navigator.share({title:"Liste de courses",text:t}).catch(function(){});
+else if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast("Liste copiée")})}}
+
+/* ---------- Ajouter / modifier une recette perso ---------- */
+function edit(r){var n=!r;r=r||{t:"",a:"",gm:"",m:"",i:[],s:[],e:[]};
+var h='<div class="top"><button class="back" id="bk">← Annuler</button></div><h2>'+(n?"Nouvelle recette":"Modifier la recette")+"</h2>";
+h+='<label class="f">Nom</label><input type="text" id="et" value="'+esc(r.t)+'">';
+h+='<div class="row"><div style="flex:1"><label class="f">Appareil</label><input type="text" id="ea" list="apl" value="'+esc(r.a)+'" placeholder="Air fryer…"></div><div style="flex:1"><label class="f">Temps</label><input type="text" id="em" value="'+esc(r.m)+'" placeholder="20 min"></div></div>';
+h+='<datalist id="apl"><option value="Plaque"><option value="Cookeo"><option value="Air fryer"><option value="Robot Moulinex"><option value="Four"></datalist>';
+h+='<label class="f">Ingrédients <span class="hint">— pour 2 personnes, un par ligne, avec la quantité (ex. : 150 g de brocoli, 2 œufs, 10 cl de crème)</span></label><textarea id="ei" rows="7" placeholder="4 œufs&#10;150 g d’épinards">'+esc(r.i.join("\n"))+"</textarea>";
+h+='<p class="small" id="eci"></p>';
+h+='<label class="f">Étapes <span class="hint">— une par ligne ; écris les temps (ex. « 8 min ») pour avoir des minuteurs</span></label><textarea id="es" rows="7" placeholder="Cuis 8 min à 180 °C.">'+esc(r.s.join("\n"))+"</textarea>";
+h+='<label class="f">Glucides nets par portion <span class="hint">— laisse vide pour le calcul automatique</span></label><input type="number" id="eg" inputmode="decimal" min="0" step="0.5" value="'+esc(r.gm)+'">';
+h+='<label class="f">Émojis de l’illustration <span class="hint">— 1 ou 2, facultatif</span></label><input type="text" id="ee" value="'+esc((r.e||[]).join(""))+'" placeholder="🍗🥦">';
+h+='<div class="nav"><button class="b" id="ok">Enregistrer</button></div>'+(n?"":'<div class="nav"><button class="x" id="del">Supprimer cette recette</button></div>');
+app.innerHTML=h;
+var ei=document.getElementById("ei"),eci=document.getElementById("eci");
+function prev(){var tmp={id:"tmp",i:ei.value.split("\n").map(function(x){return x.trim()}).filter(Boolean)};if(!tmp.i.length){eci.textContent="";return}
+var nu=nutri(tmp);eci.textContent="Calcul auto : ≈ "+gtxt(nu.pp)+" g de glucides nets par portion"+(nu.unk?" ("+nu.unk+" ingrédient"+(nu.unk>1?"s":"")+" non reconnu"+(nu.unk>1?"s":"")+")":"")+"."}
+ei.oninput=prev;prev();
+document.getElementById("bk").onclick=back;
+document.getElementById("ok").onclick=function(){
+function v(id){return document.getElementById(id).value.trim()}
+function lines(id){return v(id).split("\n").map(function(x){return x.trim()}).filter(Boolean)}
+var em=v("ee"),ems=em?(em.match(/\p{Extended_Pictographic}️?/gu)||[]).slice(0,2):[];
+var o={t:v("et"),a:v("ea")||"Autre",m:v("em"),gm:v("eg")===""?null:parseFloat(v("eg").replace(",",".")),i:lines("ei"),s:lines("es"),e:ems};
+if(!o.t){toast("Donne un nom à la recette");return}if(!o.s.length)o.s=["(aucune étape)"];
+if(n){o.id="u"+Date.now();st.u.push(o)}else{o.id=r.id;for(var k=0;k<st.u.length;k++)if(st.u[k].id==r.id)st.u[k]=o}
+save();toast("Recette enregistrée");go("#r/"+o.id,true)};
+var d=document.getElementById("del");if(d)d.onclick=function(){if(!confirm("Supprimer « "+r.t+" » ?"))return;
+st.u=st.u.filter(function(x){return x.id!=r.id});st.L=st.L.filter(function(x){return x.id!=r.id});delete st.f[r.id];delete st.n[r.id];delete st.p[r.id];putPhoto(r.id,null);save();go("",true)}}
+
+/* ---------- Réglages & sauvegarde ---------- */
+function more(){var h='<h1>Réglages</h1>';
+h+='<label class="f">Thème</label><select id="th"><option value="">Automatique</option><option value="light">Clair</option><option value="dark">Sombre</option></select>';
+h+='<h3>Sauvegarde</h3><p class="small">Favoris, notes, recettes perso, photos, nombre de personnes et liste de courses sont enregistrés sur ce téléphone et marchent hors ligne. Exporte une sauvegarde pour ne rien perdre en cas de réinstallation ou de changement de téléphone.</p>';
+h+='<div class="nav"><button class="g" id="ex">Exporter</button><button class="g" id="im">Importer</button></div><input type="file" id="fi" accept=".json,application/json" hidden>';
+h+='<h3>À propos</h3><p class="small">Recettes low carb · '+R.length+" recettes de base, "+st.u.length+" perso, "+Object.keys(st.f).length+" favori(s), "+Object.keys(P).length+' photo(s).<br>Les glucides nets sont des estimations calculées à partir de valeurs nutritionnelles moyennes.</p>';
+app.innerHTML=h;
+var th=document.getElementById("th");th.value=st.theme||"";th.onchange=function(){st.theme=th.value;save();theme()};
+document.getElementById("ex").onclick=function(){var data=JSON.stringify({app:"recettes",v:2,st:st,photos:P}),name="recettes-sauvegarde-"+new Date().toISOString().slice(0,10)+".json";
+try{var file=new File([data],name,{type:"application/json"});if(navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:"Sauvegarde recettes"}).catch(function(){});return}}catch(e){}
+var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"application/json"}));a.download=name;document.body.appendChild(a);a.click();a.remove()};
+var fi=document.getElementById("fi");document.getElementById("im").onclick=function(){fi.click()};
+fi.onchange=function(){var f=fi.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{var o=JSON.parse(rd.result);if(typeof o!="object"||!o)throw 0;
+if(!confirm("Remplacer tes données actuelles par cette sauvegarde ?"))return;
+var ns=o.app=="recettes"?o.st:o,ph=o.app=="recettes"?(o.photos||{}):{};
+st=ns||{};fix();save();theme();Object.keys(P).forEach(function(k){if(!ph[k])putPhoto(k,null)});Object.keys(ph).forEach(function(k){putPhoto(k,ph[k])});
+toast("Sauvegarde importée");render()}catch(e){toast("Fichier invalide")}};rd.readAsText(f)}}
+
+history.replaceState({d:0},"",location.pathname+location.search);render();
+loadPhotos().then(function(){if(Object.keys(P).length)render()});
 </script>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script>
 </body>
