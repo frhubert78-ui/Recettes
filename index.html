@@ -25,6 +25,8 @@ h1{font-size:1.5rem;margin:8px 0 4px}h2{font-size:1.3rem;margin:4px 0 6px;line-h
 .card .fav{color:#e0a100;font-size:1.1rem}
 .tag{display:inline-block;background:var(--ok);border-radius:99px;padding:1px 9px;font-size:.78rem;margin-right:6px;color:var(--tx);font-style:normal}
 .tag.u{background:var(--warn)}
+.tag.k{background:var(--bd)}
+.seg{margin:8px 0 10px}.seg button{padding:10px 6px;font-weight:600}
 button{font:inherit}
 button.b{background:var(--ac);color:var(--acx);border:0;border-radius:12px;padding:12px 18px;font-weight:600;cursor:pointer}
 button.g{background:transparent;color:var(--ac);border:1px solid var(--bd);border-radius:12px;padding:12px 18px;cursor:pointer}
@@ -128,7 +130,35 @@ var R=[
 {t:"Œufs brouillés saumon fumé-avocat",a:"Plaque",m:"10 min",e:["🍳","🥑"],h:150,i:["4 œufs","100 g de saumon fumé","1 avocat","1 c. à soupe de crème","10 g de beurre","Ciboulette, poivre"],s:["Bats les œufs avec la crème et du poivre.","Fais fondre le beurre à feu doux, verse les œufs.","Remue sans arrêt 3 à 4 min, retire du feu quand ils sont encore crémeux.","Coupe l’avocat en tranches et le saumon en lanières.","Dresse les œufs avec le saumon et l’avocat, parsème de ciboulette."]},
 {t:"Larb de bœuf en feuilles de laitue",a:"Plaque",m:"20 min",e:["🥬","🌶️"],h:120,i:["300 g de bœuf haché 5 %","1 échalote","1 citron vert","1 c. à soupe de nuoc-mâm","1 petit piment","150 g de concombre","1 laitue","Menthe, coriandre"],s:["Émince l’échalote et le piment, coupe le concombre en petits dés.","Fais revenir la viande 5 à 6 min à feu vif, sans matière grasse.","Hors du feu, ajoute l’échalote, le piment, le nuoc-mâm et le jus du citron vert.","Ajoute la menthe et la coriandre ciselées.","Sers dans les feuilles de laitue avec le concombre."]}
 ];
-R.forEach(function(r,k){r.id="b"+k});
+var C=[
+{k:"riz",t:"Riz cantonais",a:"Plaque",m:"25 min",e:["🍚","🥚"],h:45,i:["150 g de riz","2 œufs","2 tranches de jambon","100 g de petits pois","2 oignons nouveaux","2 c. à soupe de sauce soja","1 c. à soupe d’huile"],s:["Cuis le riz 10 min dans l’eau bouillante salée, égoutte-le et laisse-le refroidir (idéalement la veille).","Bats les œufs et fais une omelette fine dans un peu d’huile, puis coupe-la en lanières.","Fais revenir les oignons nouveaux émincés et les petits pois 3 min dans le reste d’huile.","Ajoute le riz et fais-le sauter 4 min à feu vif.","Ajoute le jambon en dés, l’omelette et la sauce soja, mélange 1 min et sers."]},
+{k:"riz",t:"Risotto aux champignons",a:"Cookeo",m:"25 min",e:["🍚","🍄"],h:35,i:["160 g de riz arborio","250 g de champignons","1 échalote","10 cl de vin blanc","50 cl de bouillon","30 g de parmesan","20 g de beurre","Sel, poivre"],s:["Émince l’échalote et les champignons.","Mode dorer : fais revenir l’échalote et les champignons 3 min dans la moitié du beurre, ajoute le riz et nacre-le 2 min.","Verse le vin blanc et laisse évaporer 1 min, puis ajoute le bouillon.","Ferme et cuis 6 min sous pression.","Libère la vapeur, ajoute le parmesan et le reste du beurre, remue 1 min et sers aussitôt."]},
+{k:"riz",t:"Poulet basquaise et riz",a:"Cookeo",m:"35 min",e:["🍗","🫑"],h:10,i:["4 hauts de cuisse de poulet (500 g)","2 poivrons","1 oignon","2 gousses d’ail","200 g de tomates concassées","1 c. à café de piment d’Espelette","150 g de riz","1 c. à soupe d’huile d’olive","Sel"],s:["Coupe les poivrons en lanières, émince l’oignon et l’ail.","Mode dorer : fais dorer le poulet 5 min dans l’huile, ajoute l’oignon, l’ail et les poivrons 3 min.","Ajoute les tomates concassées, le piment d’Espelette et un demi-verre d’eau. Ferme et cuis 12 min sous pression.","Pendant ce temps, cuis le riz 11 min dans l’eau bouillante salée.","Sers le poulet et sa sauce avec le riz."]},
+{k:"riz",t:"Paëlla express poulet-chorizo-crevettes",a:"Plaque",m:"35 min",e:["🥘","🦐"],h:28,i:["150 g de riz rond","200 g de blanc de poulet","50 g de chorizo","150 g de crevettes décortiquées","1 oignon","1 poivron rouge","100 g de petits pois","50 cl de bouillon","1 c. à soupe d’huile d’olive","Safran, sel"],s:["Coupe le poulet en dés, le chorizo en rondelles, l’oignon et le poivron en morceaux.","Fais dorer le poulet et le chorizo 5 min dans l’huile, puis ajoute l’oignon et le poivron 3 min.","Ajoute le riz, mélange 1 min, puis verse le bouillon chaud et le safran.","Laisse cuire à feu moyen 15 min sans remuer.","Ajoute les crevettes et les petits pois, couvre et cuis encore 5 min. Laisse reposer 3 min avant de servir."]},
+{k:"riz",t:"Riz sauté thaï au poulet-basilic",a:"Plaque",m:"20 min",e:["🍚","🌶️"],h:100,i:["150 g de riz jasmin","250 g de blanc de poulet","2 gousses d’ail","1 petit piment","1 c. à soupe de sauce huître","1 c. à soupe de sauce soja","1 c. à café de sucre","2 œufs","1 c. à soupe d’huile","Basilic thaï"],s:["Cuis le riz 10 min, égoutte-le et laisse-le tiédir.","Hache le poulet en petits morceaux, émince l’ail et le piment.","Fais sauter l’ail et le piment 1 min dans l’huile, ajoute le poulet 5 min.","Ajoute le riz, les sauces et le sucre, fais sauter 3 min, puis le basilic.","Fais cuire les œufs au plat à part et pose-les sur le riz."]},
+{k:"riz",t:"Bowl de saumon teriyaki",a:"Air fryer",m:"25 min",e:["🍣","🥑"],h:200,i:["150 g de riz","2 pavés de saumon","3 c. à soupe de sauce soja","1 c. à soupe de miel","1 c. à café de gingembre","1 avocat","150 g de concombre","1 c. à soupe de graines de sésame"],s:["Cuis le riz 11 min dans l’eau bouillante, puis égoutte-le.","Mélange la sauce soja, le miel et le gingembre râpé. Badigeonne les pavés de saumon avec la moitié.","Cuis le saumon 9 min à 190 °C à l’air fryer.","Pendant ce temps, fais réduire le reste de sauce 2 min dans une petite casserole.","Dresse le riz, le saumon, l’avocat et le concombre en tranches. Arrose de sauce et parsème de sésame."]},
+{k:"pates",t:"Spaghetti carbonara",a:"Plaque",m:"20 min",e:["🍝","🥓"],h:48,i:["200 g de spaghetti","125 g de lardons","2 jaunes d’œufs","1 œuf","50 g de parmesan","Poivre"],s:["Cuis les spaghetti dans une grande casserole d’eau salée selon le paquet (environ 10 min).","Pendant ce temps, fais dorer les lardons 5 min à sec à la poêle.","Bats les jaunes, l’œuf entier et le parmesan râpé avec beaucoup de poivre.","Égoutte les pâtes en gardant un peu d’eau de cuisson, puis mets-les dans la poêle hors du feu.","Verse le mélange aux œufs et remue vivement en ajoutant un peu d’eau de cuisson pour obtenir une sauce crémeuse."]},
+{k:"pates",t:"Penne bolognaise one pot",a:"Cookeo",m:"30 min",e:["🍝","🍅"],h:6,i:["200 g de penne","250 g de bœuf haché 15 %","1 oignon","1 carotte","1 gousse d’ail","300 g de passata","20 g de parmesan","Basilic, sel, poivre"],s:["Hache l’oignon, l’ail et la carotte.","Mode dorer : fais revenir la viande 4 min, puis les légumes 3 min.","Ajoute la passata, les penne et 40 cl d’eau. Sale et poivre.","Ferme et cuis 5 min sous pression.","Libère la vapeur, remue, puis sers avec le parmesan et le basilic."]},
+{k:"pates",t:"Tagliatelles au saumon, crème citronnée",a:"Plaque",m:"20 min",e:["🍝","🐟"],h:190,i:["200 g de tagliatelles","2 pavés de saumon","15 cl de crème","1 citron","1 échalote","Aneth, sel, poivre"],s:["Cuis les tagliatelles dans l’eau bouillante salée selon le paquet.","Coupe le saumon en cubes et fais-le dorer 4 min à la poêle avec l’échalote émincée.","Ajoute la crème, le zeste et le jus du citron, laisse frémir 2 min.","Égoutte les pâtes et mélange-les à la sauce.","Parsème d’aneth, poivre et sers."]},
+{k:"pates",t:"Gratin de coquillettes jambon-fromage",a:"Air fryer",m:"30 min",e:["🧀","🍝"],h:52,i:["200 g de coquillettes","3 tranches de jambon","20 cl de crème","80 g d’emmental râpé","Muscade, sel, poivre"],s:["Cuis les coquillettes 2 min de moins que sur le paquet, puis égoutte-les.","Mélange-les avec le jambon en dés, la crème, la muscade, sel et poivre.","Verse dans un plat qui rentre dans l’air fryer et couvre d’emmental.","Gratine 10 min à 180 °C.","Laisse reposer 2 min et sers."]},
+{k:"pates",t:"Fusilli au pesto, poulet et tomates cerises",a:"Plaque",m:"20 min",e:["🌿","🍅"],h:90,i:["200 g de fusilli","250 g de blanc de poulet","3 c. à soupe de pesto","200 g de tomates cerises","20 g de parmesan","1 c. à soupe d’huile d’olive"],s:["Cuis les fusilli dans l’eau bouillante salée selon le paquet.","Coupe le poulet en lamelles et fais-le dorer 6 min dans l’huile.","Ajoute les tomates cerises coupées en deux et cuis 2 min.","Égoutte les pâtes et mélange-les avec le pesto, le poulet et les tomates.","Parsème de parmesan et sers."]},
+{k:"pates",t:"One pot pasta tomate-mozzarella",a:"Cookeo",m:"20 min",e:["🍝","🧀"],h:0,i:["200 g de spaghetti","400 g de tomates concassées","1 oignon","2 gousses d’ail","50 cl de bouillon","1 mozzarella","1 c. à soupe d’huile d’olive","Basilic, sel, poivre"],s:["Émince l’oignon et l’ail.","Mode dorer : fais-les revenir 2 min dans l’huile.","Ajoute les spaghetti cassés en deux, les tomates concassées et le bouillon.","Ferme et cuis 5 min sous pression.","Libère la vapeur, ajoute la mozzarella en morceaux et le basilic, remue et sers."]},
+{k:"nouilles",t:"Pad thaï aux crevettes",a:"Plaque",m:"25 min",e:["🍜","🦐"],h:30,i:["150 g de nouilles de riz","200 g de crevettes décortiquées","2 œufs","100 g de pousses de soja","2 oignons nouveaux","2 c. à soupe de nuoc-mâm","1 c. à soupe de sucre","1 citron vert","30 g de cacahuètes","1 c. à soupe d’huile"],s:["Fais tremper les nouilles 8 min dans l’eau très chaude, puis égoutte-les.","Mélange le nuoc-mâm, le sucre et le jus du citron vert.","Fais sauter les crevettes 2 min dans l’huile, pousse-les sur le côté et brouille les œufs.","Ajoute les nouilles et la sauce, fais sauter 3 min.","Ajoute les pousses de soja et les oignons nouveaux, puis parsème de cacahuètes concassées."]},
+{k:"nouilles",t:"Nouilles sautées bœuf-brocoli",a:"Plaque",m:"20 min",e:["🥡","🥦"],h:20,i:["150 g de nouilles aux œufs","250 g de rumsteck de bœuf","200 g de brocoli","2 c. à soupe de sauce soja","1 c. à soupe de sauce huître","1 gousse d’ail","1 c. à café de gingembre","1 c. à soupe d’huile"],s:["Cuis les nouilles 4 min dans l’eau bouillante, puis égoutte-les.","Taille le bœuf en fines lamelles et le brocoli en petits bouquets.","Fais sauter le bœuf 2 min à feu très vif dans l’huile, puis retire-le.","Fais sauter le brocoli avec l’ail et le gingembre 4 min avec un fond d’eau.","Remets le bœuf, ajoute les nouilles et les sauces, fais sauter 2 min et sers."]},
+{k:"nouilles",t:"Nouilles de riz poulet-cacahuète",a:"Plaque",m:"20 min",e:["🥜","🍜"],h:38,i:["150 g de nouilles de riz","250 g de blanc de poulet","1 carotte","1 poivron rouge","2 c. à soupe de beurre de cacahuète","2 c. à soupe de sauce soja","1 citron vert","1 c. à soupe d’huile","Coriandre"],s:["Fais tremper les nouilles 8 min dans l’eau très chaude, puis égoutte-les.","Délaye le beurre de cacahuète avec la sauce soja, le jus du citron vert et 4 c. à soupe d’eau chaude.","Fais sauter le poulet en lamelles 5 min dans l’huile.","Ajoute la carotte râpée et le poivron en lanières 3 min.","Ajoute les nouilles et la sauce, mélange 2 min et parsème de coriandre."]},
+{k:"ramen",t:"Ramen shoyu au poulet",a:"Plaque",m:"30 min",e:["🍜","🥚"],h:25,i:["180 g de nouilles ramen","2 blancs de poulet","80 cl de bouillon","3 c. à soupe de sauce soja","1 c. à soupe de mirin","2 œufs","2 oignons nouveaux","1 morceau de gingembre","1 gousse d’ail","1 pak choï"],s:["Fais frémir le bouillon avec la sauce soja, le mirin, le gingembre et l’ail tranchés. Ajoute les blancs de poulet et poche-les 12 min.","Cuis les œufs 6 min 30 dans l’eau bouillante, plonge-les dans l’eau froide et écale-les.","Retire le poulet et tranche-le. Ajoute le pak choï coupé en quatre dans le bouillon pendant 2 min.","Cuis les nouilles selon le paquet (environ 3 min) et égoutte-les.","Répartis nouilles et bouillon dans 2 bols, ajoute le poulet, le pak choï, l’œuf coupé en deux et les oignons nouveaux."]},
+{k:"ramen",t:"Ramen miso au porc",a:"Cookeo",m:"35 min",e:["🍜","🐖"],h:340,i:["180 g de nouilles ramen","300 g d’échine de porc","2 c. à soupe de pâte miso","80 cl de bouillon","100 g de maïs","2 œufs","2 oignons nouveaux","1 gousse d’ail","1 c. à soupe d’huile de sésame"],s:["Coupe le porc en tranches fines.","Mode dorer : fais dorer le porc et l’ail 4 min dans l’huile de sésame.","Ajoute le bouillon, ferme et cuis 10 min sous pression.","Pendant ce temps, cuis les œufs 6 min 30, rafraîchis-les et écale-les. Cuis les nouilles selon le paquet.","Libère la vapeur, délaye le miso dans le bouillon (sans faire bouillir). Sers sur les nouilles avec le maïs, l’œuf et les oignons nouveaux."]},
+{k:"ramen",t:"Ramen épicé aux crevettes",a:"Plaque",m:"25 min",e:["🍜","🌶️"],h:8,i:["180 g de nouilles ramen","200 g de crevettes décortiquées","80 cl de bouillon","2 c. à soupe de sauce soja","1 c. à soupe de sriracha","150 g de champignons","1 pak choï","2 œufs","2 oignons nouveaux"],s:["Cuis les œufs 6 min 30, rafraîchis-les et écale-les.","Fais chauffer le bouillon avec la sauce soja et la sriracha.","Ajoute les champignons émincés et le pak choï, cuis 4 min.","Ajoute les crevettes et cuis 3 min. Cuis les nouilles à part selon le paquet.","Sers les nouilles dans le bouillon avec les crevettes, les légumes, l’œuf et les oignons nouveaux."]},
+{k:"burger",t:"Cheeseburger maison",a:"Air fryer",m:"20 min",e:["🍔","🧀"],h:30,i:["2 pains à burger","2 steaks hachés 15 % (300 g)","2 tranches de cheddar","1 tomate","4 feuilles de salade","1 petit oignon","2 cornichons","2 c. à soupe de ketchup","1 c. à soupe de moutarde","Sel, poivre"],s:["Sale et poivre les steaks, cuis-les 8 min à 200 °C à l’air fryer en les retournant à mi-cuisson.","Pose une tranche de cheddar sur chaque steak et laisse fondre 1 min.","Toaste les pains 2 min à l’air fryer.","Coupe la tomate, l’oignon et les cornichons en rondelles.","Monte les burgers : pain, ketchup et moutarde, salade, steak au cheddar, tomate, oignon, cornichons."]},
+{k:"burger",t:"Burger de poulet croustillant",a:"Air fryer",m:"30 min",e:["🍔","🍗"],h:40,i:["2 pains à burger","2 blancs de poulet (300 g)","40 g de chapelure","1 œuf","1 c. à café de paprika","2 c. à soupe de mayonnaise","4 feuilles de salade","1 tomate","Sel, poivre"],s:["Aplatis les blancs de poulet pour qu’ils aient la même épaisseur.","Trempe-les dans l’œuf battu, puis dans la chapelure mélangée au paprika, sel et poivre.","Cuis 12 min à 190 °C à l’air fryer en les retournant à mi-cuisson.","Toaste les pains 2 min.","Monte les burgers avec la mayonnaise, la salade, le poulet et la tomate."]},
+{k:"burger",t:"Burger végétarien aux pois chiches",a:"Air fryer",m:"30 min",e:["🍔","🥑"],h:110,i:["2 pains à burger","250 g de pois chiches cuits","1 petit oignon","1 gousse d’ail","30 g de chapelure","1 c. à café de cumin","1 avocat","1 tomate","2 c. à soupe de yaourt grec","4 feuilles de salade","Sel, poivre"],s:["Mixe les pois chiches égouttés avec l’oignon, l’ail, le cumin, sel et poivre par impulsions.","Ajoute la chapelure et forme 2 galettes épaisses.","Badigeonne-les d’un peu d’huile et cuis 12 min à 190 °C en les retournant à mi-cuisson.","Écrase l’avocat avec le yaourt, sel et poivre. Toaste les pains 2 min.","Monte les burgers avec la crème d’avocat, la salade, la galette et la tomate."]},
+{k:"puree",t:"Purée maison et saucisses",a:"Cookeo",m:"30 min",e:["🥔","🌭"],h:42,i:["800 g de pommes de terre","15 cl de lait","40 g de beurre","4 saucisses de Toulouse","Muscade, sel, poivre"],s:["Épluche les pommes de terre et coupe-les en gros morceaux.","Mets-les dans le Cookeo avec 2 verres d’eau salée, ferme et cuis 10 min sous pression.","Pendant ce temps, cuis les saucisses 15 min à la poêle à feu moyen en les retournant.","Égoutte les pommes de terre et écrase-les avec le lait chaud et le beurre.","Assaisonne avec muscade, sel et poivre, puis sers avec les saucisses."]},
+{k:"puree",t:"Hachis parmentier",a:"Cookeo + air fryer",m:"45 min",e:["🥔","🥩"],h:24,i:["700 g de pommes de terre","300 g de bœuf haché 15 %","1 oignon","15 cl de lait","30 g de beurre","50 g d’emmental râpé","Muscade, sel, poivre"],s:["Cuis les pommes de terre épluchées 10 min sous pression dans le Cookeo avec 2 verres d’eau salée.","Égoutte et écrase-les avec le lait chaud, le beurre et la muscade.","Fais revenir l’oignon haché et la viande 6 min à la poêle, sale et poivre.","Dans un plat qui rentre dans l’air fryer, étale la viande, puis la purée, et parsème d’emmental.","Gratine 12 min à 180 °C."]},
+{k:"puree",t:"Purée de patate douce, poulet paprika",a:"Cookeo + air fryer",m:"30 min",e:["🍠","🍗"],h:22,i:["600 g de patates douces","2 blancs de poulet","10 cl de lait de coco","20 g de beurre","1 c. à café de paprika","1 c. à soupe d’huile","Sel, poivre"],s:["Épluche les patates douces et coupe-les en cubes.","Cuis-les 8 min sous pression dans le Cookeo avec un verre d’eau salée.","Badigeonne le poulet d’huile, de paprika, sel et poivre. Cuis 14 min à 190 °C à l’air fryer en le retournant à mi-cuisson.","Égoutte les patates douces et écrase-les avec le lait de coco et le beurre.","Tranche le poulet et sers-le sur la purée."]}
+];
+C.forEach(function(r,k){r.id="c"+k});
+R.forEach(function(r,k){r.id="b"+k});R=R.concat(C);
+function sec(r){return r.k?"cl":"lc"}
 
 /* ---------- Données sauvegardées ---------- */
 var st={};try{st=JSON.parse(localStorage.getItem("lc")||"{}")}catch(e){}
@@ -167,24 +197,37 @@ h+='<div class="pl"><span>'+e[0]+"</span><span>"+(e[1]||"")+"</span></div>"+(big
 function photoBtns(r){return'<div class="pb">'+(P[r.id]?'<button id="phx">Retirer</button>':"")+'<button id="ph">📷 '+(P[r.id]?"Changer":"Ma photo")+'</button></div><input type="file" id="phf" accept="image/*" hidden>'}
 
 /* ---------- Analyse des ingrédients & glucides nets ---------- */
-/* [motif, glucides nets pour 100 g, poids d’une unité en g, rayon] — valeurs moyennes approximatives */
+/* [motif, glucides nets /100 g, poids d’une unité en g, rayon, kcal /100 g] — valeurs moyennes approximatives (féculents pesés crus) */
 var NC=[
-[/lait de coco/,3,0,"E"],[/huile/,0,0,"E"],[/moutarde/,3,0,"E"],[/soja/,5,0,"E"],[/nuoc/,3,0,"E"],[/pate de curry/,12,0,"E"],[/bouillon/,.5,0,"E"],
-[/olive/,1,0,"E"],[/cumin|paprika|ras el hanout|curry|muscade|epice|tikka|garam|cannelle/,5,0,"E"],[/^sel|poivre/,0,0,"E"],
-[/epinard/,1.2,0,"L"],[/courgette/,2,200,"L"],[/brocoli/,3,300,"L"],[/chou-fleur|chou fleur/,3,800,"L"],[/champignon/,1.5,0,"L"],
-[/haricots? verts?/,4,0,"L"],[/echalote/,13,30,"L"],[/oignon/,6.5,100,"L"],[/^ail|\bail\b/,20,5,"L"],
-[/tomates? concassee|pulpe de tomate|tomates? pelee/,3.5,0,"L"],[/passata|coulis/,5,0,"L"],[/tomate/,3,120,"L"],
-[/poivron/,5,150,"L"],[/aubergine/,3,250,"L"],[/concombre/,2,300,"L"],[/romaine|laitue|salade|roquette|mache/,1.2,300,"L"],
-[/avocat/,2,150,"L"],[/celeri/,3,500,"L"],[/poireau/,5,200,"L"],[/citron vert/,7,30,"L"],[/citron confit/,1,60,"L"],[/citron/,7,40,"L"],
-[/gingembre/,10,10,"L"],[/piment/,6,10,"L"],[/asperge/,2,20,"L"],[/chou/,3.5,800,"L"],
-[/basilic|persil|coriandre|menthe|aneth|ciboulette|thym|herbe|romarin/,0,5,"L"],
-[/jambon/,1,40,"V"],[/lardon|bacon/,.5,0,"V"],[/blancs? de poulet/,0,150,"V"],[/hauts? de cuisse/,0,125,"V"],[/cuisses? de poulet/,0,200,"V"],
-[/paves? de saumon/,0,130,"V"],[/dos de cabillaud/,0,140,"V"],[/steaks? hache/,0,125,"V"],[/filet mignon/,0,400,"V"],
-[/poulet|boeuf|steak|saumon|cabillaud|crevette|gambas|porc|agneau|dinde|veau|thon|magret|poisson|truite|merlu|colin/,0,150,"V"],
-[/oeuf/,.7,55,"C"],[/creme/,3,0,"C"],[/chevre/,2,0,"C"],[/emmental|parmesan|gruyere|comte/,0,0,"C"],[/mozzarella/,1,125,"C"],
-[/feta/,1,200,"C"],[/ricotta/,3,250,"C"],[/yaourt/,4,125,"C"],[/beurre/,.5,0,"C"],[/fromage/,1,0,"C"],[/lait/,4.8,0,"C"]
+[/lait de coco/,3,0,"E",190],[/huile/,0,0,"E",900],[/beurre de cacahuete/,12,0,"E",600],[/cacahuete/,10,0,"E",580],
+[/nouilles? de riz|vermicelles? de riz/,80,0,"E",360],[/nouilles? ramen|ramen/,68,0,"E",370],[/nouille/,68,0,"E",380],
+[/vinaigre/,1,0,"E",20],[/\briz\b/,77,0,"E",350],
+[/spaghetti|penne|tagliatelle|fusilli|linguine|macaroni|coquillette|farfalle|rigatoni|\bpates\b/,70,0,"E",355],
+[/chapelure/,72,0,"E",380],[/pains? a burger|pains? burger|\bbuns?\b/,48,75,"B",270],[/pois chiche/,16,0,"E",140],
+[/mayonnaise/,1,0,"E",700],[/ketchup/,25,0,"E",110],[/sriracha/,20,0,"E",100],[/miso/,25,0,"E",200],[/sauce huitre/,10,0,"E",50],
+[/\bmiel\b/,80,0,"E",320],[/sucre/,100,0,"E",400],[/mirin/,40,0,"E",230],[/sesame/,12,0,"E",570],[/pesto/,5,0,"E",450],
+[/\bvin (blanc|rouge)/,2.5,0,"E",80],[/moutarde/,3,0,"E",150],[/pousses? de soja/,4,0,"L",30],[/soja/,5,0,"E",60],[/nuoc/,3,0,"E",35],
+[/pate de curry/,12,0,"E",150],[/bouillon/,.5,0,"E",5],[/cornichon/,2,10,"E",15],[/olive/,1,0,"E",140],
+[/cumin|paprika|ras el hanout|curry|muscade|epice|tikka|garam|cannelle|safran/,5,0,"E",300],[/^sel|poivre/,0,0,"E",0],
+[/epinard/,1.2,0,"L",25],[/courgette/,2,200,"L",17],[/brocoli/,3,300,"L",35],[/chou-fleur|chou fleur/,3,800,"L",25],[/champignon/,1.5,0,"L",25],
+[/haricots? verts?/,4,0,"L",30],[/echalote/,13,30,"L",70],[/oignons? nouveaux?|cebette/,5,15,"L",30],[/oignon/,6.5,100,"L",40],[/^ail|\bail\b/,20,5,"L",130],
+[/tomates? concassee|pulpe de tomate|tomates? pelee/,3.5,0,"L",25],[/passata|coulis/,5,0,"L",30],[/tomate/,3,120,"L",20],
+[/poivron/,5,150,"L",30],[/aubergine/,3,250,"L",25],[/concombre/,2,300,"L",13],[/pommes? de terre/,17,150,"L",80],[/patates? douces?/,18,250,"L",86],
+[/carotte/,7,100,"L",40],[/petits? pois/,10,0,"L",80],[/\bmais\b/,17,0,"L",100],[/pak choi|bok choy/,1.2,150,"L",13],
+[/romaine|laitue|salade|roquette|mache/,1.2,300,"L",15],[/avocat/,2,150,"L",160],[/celeri/,3,500,"L",30],[/poireau/,5,200,"L",30],
+[/citron vert/,7,30,"L",30],[/citron confit/,1,60,"L",30],[/citron/,7,40,"L",30],[/gingembre/,10,10,"L",80],[/piment/,6,10,"L",40],
+[/asperge/,2,20,"L",20],[/chou/,3.5,800,"L",25],[/basilic|persil|coriandre|menthe|aneth|ciboulette|thym|herbe|romarin/,0,5,"L",40],
+[/jambon/,1,40,"V",115],[/lardon|bacon/,.5,0,"V",300],[/chorizo/,2,0,"V",450],[/saucisse/,1,100,"V",300],
+[/(hache|steak).*\b(15|20) ?%/,0,150,"V",215],[/hache/,0,125,"V",125],[/blancs? de poulet/,0,150,"V",120],[/hauts? de cuisse/,0,125,"V",180],
+[/cuisses? de poulet/,0,200,"V",150],[/saumon fume/,0,0,"V",180],[/saumon/,0,130,"V",200],[/dos de cabillaud/,0,140,"V",80],
+[/cabillaud|colin|merlu|poisson/,0,140,"V",85],[/crevette|gambas/,0,0,"V",90],[/filet mignon/,0,400,"V",120],[/echine/,0,0,"V",230],
+[/agneau/,0,0,"V",230],[/poulet|volaille|dinde/,0,150,"V",120],[/boeuf|rumsteck|steak|veau/,0,150,"V",130],[/porc/,0,150,"V",150],
+[/thon|magret|truite/,0,150,"V",150],
+[/jaunes? d.oeuf/,.5,18,"C",330],[/oeuf/,.7,55,"C",140],[/creme/,3,0,"C",290],[/chevre/,2,0,"C",200],[/emmental|parmesan|gruyere|comte/,0,0,"C",390],
+[/cheddar/,.5,20,"C",400],[/mozzarella/,1,125,"C",250],[/feta/,1,200,"C",270],[/ricotta/,3,250,"C",150],[/yaourt/,4,125,"C",100],
+[/beurre/,.5,0,"C",745],[/fromage/,1,0,"C",300],[/lait/,4.8,0,"C",47]
 ];
-var AIS={L:"Fruits & légumes",V:"Viandes & poissons",C:"Crèmerie & œufs",E:"Épicerie",Z:"Autres"};
+var AIS={L:"Fruits & légumes",V:"Viandes & poissons",C:"Crèmerie & œufs",B:"Boulangerie",E:"Épicerie",Z:"Autres"};
 var UN="kg|g|ml|cl|l|c\\. ?à ?soupe|c\\. ?à ?café|c\\. ?à ?s\\.?|c\\. ?à ?c\\.?|cuill[eè]res? à soupe|cuill[eè]res? à café|gousses?|tranches?|pincées?|morceaux?|boules?|feuilles?|brins?";
 var PR=new RegExp("^(\\d+(?:[.,]\\d+)?)\\s*(?:("+UN+")(?![A-Za-zÀ-ÿ]))?\\s*(?:(?:de |d’|d')(?=\\S))?(.*)$","i");
 function unitKey(u){if(!u)return"";u=norm(u);if(/soupe|c\. ?a ?s/.test(u))return"cs";if(/cafe|c\. ?a ?c/.test(u))return"cc";return u.replace(/s$/,"")}
@@ -194,15 +237,17 @@ if(!m){o.q=0;o.rest=s.trim();o.u=""}else{o.q=parseFloat(m[1].replace(",","."));o
 var pg=o.rest.match(/\((\d+(?:[.,]\d+)?)\s*g\)/);o.pg=pg?parseFloat(pg[1].replace(",",".")):0;
 o.name=o.rest.replace(/\s*\(\d+(?:[.,]\d+)?\s*g\)/,"").trim();o.e=look(o.name);return o}
 function grams(o){if(!o.q)return 0;if(o.pg)return o.pg;var e=o.e,uk=unitKey(o.u),uw=e&&e[2]?e[2]:100;
-var f={g:1,kg:1000,ml:1,cl:10,l:1000,cs:15,cc:5,gousse:5,tranche:40,pincee:0,brin:0,feuille:5,morceau:e&&e[2]?e[2]:10,boule:uw}[uk];
+var f={g:1,kg:1000,ml:1,cl:10,l:1000,cs:15,cc:5,gousse:5,tranche:e&&e[2]?e[2]:40,pincee:0,brin:0,feuille:5,morceau:e&&e[2]?e[2]:10,boule:uw}[uk];
 if(f!=null)return o.q*f;var n=norm(o.name),mul=/\bpetite?s?\b/.test(n)?.6:/\bgrosse?s?\b/.test(n)?1.5:1;return o.q*uw*mul}
-function carbLine(o){if(!o.q)return{v:0,known:true,seas:true};if(!o.e)return{v:0,known:false};return{v:grams(o)*o.e[1]/100,known:true}}
+function carbLine(o){if(!o.q)return{v:0,kc:0,known:true,seas:true};if(!o.e)return{v:0,kc:0,known:false};var g=grams(o);return{v:g*o.e[1]/100,kc:g*o.e[4]/100,known:true}}
 var CC={};
 function nutri(r){var key=r.id+"|"+r.i.join("|");if(CC[key])return CC[key];
-var rows=r.i.map(function(x){var o=parse(x);return{o:o,c:carbLine(o)}}),tot=0,unk=0;
-rows.forEach(function(x){tot+=x.c.v;if(!x.c.known)unk++});
-return CC[key]={rows:rows,tot:tot,pp:tot/2,unk:unk}}
+var rows=r.i.map(function(x){var o=parse(x);return{o:o,c:carbLine(o)}}),tot=0,kc=0,unk=0;
+rows.forEach(function(x){tot+=x.c.v;kc+=x.c.kc;if(!x.c.known)unk++});
+return CC[key]={rows:rows,tot:tot,pp:tot/2,kc:kc,kpp:kc/2,unk:unk}}
 function carbs(r){return r.gm!=null&&r.gm!==""?+r.gm:nutri(r).pp}
+function kcal(r){return nutri(r).kpp}
+function ktxt(v){return String(Math.round(v/5)*5).replace(/\B(?=(\d{3})+$)/g," ")}
 function gtxt(v){return v<1?"< 1":String(Math.round(v))}
 function mins(r){var n=norm(r.m||""),h=n.match(/(\d+)\s*h/),m=n.match(/(\d+)\s*min/);var t=(h?+h[1]*60:0)+(m?+m[1]:0);return t||(parseInt(n)||0)}
 
@@ -254,49 +299,62 @@ window.scrollTo(0,v=="home"?(view.y||0):0)}
 function badge(){var n=st.L.length,b=document.getElementById("nL");
 var o=b.querySelector(".bdg");if(o)o.remove();if(n)b.insertAdjacentHTML("beforeend",'<span class="bdg">'+n+"</span>")}
 
-/* ---------- Accueil : recherche, filtres, tri ---------- */
+/* ---------- Accueil : rubriques, recherche, filtres, tri ---------- */
 var F={q:"",c:"",g:"",t:"",s:""};
-var CH=[["","Toutes"],["fav","★ Favoris"],["cookeo","Cookeo"],["air fryer","Air fryer"],["plaque","Plaque"],["robot","Robot"],["u","Mes recettes"]];
-function home(){var h='<h1>Recettes low carb</h1><p class="sub">'+all().length+' recettes · glucides nets par portion</p>';
+var CH={lc:[["","Toutes"],["fav","★ Favoris"],["cookeo","Cookeo"],["air fryer","Air fryer"],["plaque","Plaque"],["robot","Robot"],["u","Mes recettes"]],
+cl:[["","Toutes"],["fav","★ Favoris"],["k:riz","🍚 Riz"],["k:pates","🍝 Pâtes"],["k:nouilles","🥡 Nouilles"],["k:ramen","🍜 Ramen"],["k:burger","🍔 Burgers"],["k:puree","🥔 Purées"],["u","Mes recettes"]]};
+var KN={riz:"Riz",pates:"Pâtes",nouilles:"Nouilles",ramen:"Ramen",burger:"Burger",puree:"Purée",autre:"Autre"};
+function S(){return st.sec=="cl"?"cl":"lc"}
+function home(){var se=S(),n=all().filter(function(r){return sec(r)==se}).length;
+var h='<h1>Recettes</h1><div class="tabs seg"><button class="g'+(se=="lc"?" on":"")+'" data-s="lc">🥗 Low carb</button><button class="g'+(se=="cl"?" on":"")+'" data-s="cl">🍝 Riz, pâtes & co</button></div>';
+h+='<p class="sub">'+n+" recettes · "+(se=="lc"?"glucides nets et calories par portion":"riz, pâtes, nouilles, ramen, burgers, purées")+"</p>";
 h+='<input type="search" id="q" placeholder="Recette ou ingrédient (ex. : saumon, feta…)" value="'+esc(F.q)+'">';
-h+='<div class="chips">'+CH.map(function(c){return'<button class="chip'+(F.c==c[0]?" on":"")+'" data-c="'+c[0]+'">'+c[1]+"</button>"}).join("")+"</div>";
-h+='<div class="flt"><select id="fg" aria-label="Glucides"><option value="">Glucides</option><option value="5">≤ 5 g / portion</option><option value="8">≤ 8 g / portion</option><option value="10">≤ 10 g / portion</option></select>';
+h+='<div class="chips">'+CH[se].map(function(c){return'<button class="chip'+(F.c==c[0]?" on":"")+'" data-c="'+c[0]+'">'+c[1]+"</button>"}).join("")+"</div>";
+h+=se=="lc"?'<div class="flt"><select id="fg" aria-label="Glucides"><option value="">Glucides</option><option value="5">≤ 5 g / portion</option><option value="8">≤ 8 g / portion</option><option value="10">≤ 10 g / portion</option></select>'
+:'<div class="flt"><select id="fg" aria-label="Calories"><option value="">Calories</option><option value="k500">≤ 500 kcal</option><option value="k650">≤ 650 kcal</option><option value="k800">≤ 800 kcal</option></select>';
 h+='<select id="ft" aria-label="Temps"><option value="">Temps</option><option value="15">≤ 15 min</option><option value="25">≤ 25 min</option><option value="35">≤ 35 min</option></select>';
-h+='<select id="so" aria-label="Tri"><option value="">Trier</option><option value="g">Moins de glucides</option><option value="m">Plus rapides</option><option value="t">A → Z</option></select></div><div id="res"></div>';
+h+='<select id="so" aria-label="Tri"><option value="">Trier</option><option value="g">Moins de glucides</option><option value="k">Moins de calories</option><option value="m">Plus rapides</option><option value="t">A → Z</option></select></div><div id="res"></div>';
 app.innerHTML=h;
-[["fg","g"],["ft","t"],["so","s"]].forEach(function(x){var e=document.getElementById(x[0]);e.value=F[x[1]];e.onchange=function(){F[x[1]]=e.value;results()}});
+app.querySelectorAll(".seg button").forEach(function(b){b.onclick=function(){if(S()==b.dataset.s)return;st.sec=b.dataset.s;save();F.c="";F.g="";view.y=0;home();window.scrollTo(0,0)}});
+[["fg","g"],["ft","t"],["so","s"]].forEach(function(x){var e=document.getElementById(x[0]);e.value=F[x[1]];if(e.value!=F[x[1]])F[x[1]]="";e.onchange=function(){F[x[1]]=e.value;results()}});
 var q=document.getElementById("q");q.oninput=function(){F.q=q.value;results()};
 app.querySelectorAll(".chip").forEach(function(b){b.onclick=function(){F.c=b.dataset.c;app.querySelectorAll(".chip").forEach(function(x){x.classList.toggle("on",x==b)});results()}});
 results()}
-function results(){var q=norm(F.q.trim()),a=all().filter(function(r){
+function results(){var se=S(),q=norm(F.q.trim()),a=all().filter(function(r){
+if(sec(r)!=se)return false;
 if(F.c=="fav"&&!st.f[r.id])return false;
 if(F.c=="u"&&r.id[0]!="u")return false;
-if(F.c&&F.c!="fav"&&F.c!="u"&&norm(r.a).indexOf(F.c)<0)return false;
-if(F.g&&Math.round(carbs(r))>+F.g)return false;
+if(F.c.indexOf("k:")==0&&r.k!=F.c.slice(2))return false;
+if(F.c&&F.c!="fav"&&F.c!="u"&&F.c.indexOf("k:")<0&&norm(r.a).indexOf(F.c)<0)return false;
+if(F.g){if(F.g[0]=="k"){if(kcal(r)>+F.g.slice(1))return false}else if(Math.round(carbs(r))>+F.g)return false}
 if(F.t&&(mins(r)||999)>+F.t)return false;
 if(q&&q.split(/\s+/).some(function(w){return norm(r.t+" "+r.a+" "+r.i.join(" ")).indexOf(w)<0}))return false;return true});
 if(F.s=="g")a.sort(function(x,y){return carbs(x)-carbs(y)});
+if(F.s=="k")a.sort(function(x,y){return kcal(x)-kcal(y)});
 if(F.s=="m")a.sort(function(x,y){return(mins(x)||999)-(mins(y)||999)});
 if(F.s=="t")a.sort(function(x,y){return x.t.localeCompare(y.t,"fr")});
-var h=a.map(function(r){return'<button class="card" data-id="'+r.id+'">'+cover(r)+'<div class="ct"><b>'+esc(r.t)+'</b><span><i class="tag">'+gtxt(carbs(r))+' g glucides</i>'+(r.id[0]=="u"?'<i class="tag u">perso</i>':"")+esc(r.a)+(r.m?" · "+esc(r.m):"")+"</span></div>"+(st.f[r.id]?'<span class="fav">★</span>':"")+(inList(r.id)?"<span>🛒</span>":"")+"</button>"}).join("");
+var tot=all().filter(function(r){return sec(r)==se}).length;
+var h=a.map(function(r){return'<button class="card" data-id="'+r.id+'">'+cover(r)+'<div class="ct"><b>'+esc(r.t)+'</b><span>'+(se=="lc"?'<i class="tag">'+gtxt(carbs(r))+' g glucides</i>':"")+'<i class="tag k">'+ktxt(kcal(r))+" kcal</i>"+(r.id[0]=="u"?'<i class="tag u">perso</i>':"")+"<br>"+esc(r.a)+(r.m?" · "+esc(r.m):"")+"</span></div>"+(st.f[r.id]?'<span class="fav">★</span>':"")+(inList(r.id)?"<span>🛒</span>":"")+"</button>"}).join("");
 var res=document.getElementById("res");
-res.innerHTML=(a.length!=all().length?'<p class="small">'+a.length+" résultat"+(a.length>1?"s":"")+"</p>":"")+(h||'<p class="empty">Aucune recette ne correspond.</p>');
+res.innerHTML=(a.length!=tot?'<p class="small">'+a.length+" résultat"+(a.length>1?"s":"")+"</p>":"")+(h||'<p class="empty">Aucune recette ne correspond.</p>');
 res.querySelectorAll(".card").forEach(function(b){b.onclick=function(){view.y=window.scrollY;go("#r/"+b.dataset.id)}})}
 
 /* ---------- Fiche recette ---------- */
 function recipe(r,steps){var p=por(r.id),cp=carbs(r),nu=nutri(r);
 var h='<div class="top"><button class="back" id="bk">← Recettes</button><div>'+(r.id[0]=="u"?'<button class="ico" id="ed" aria-label="Modifier">✏️</button>':'')+'<button class="ico'+(st.f[r.id]?" on":"")+'" id="fv" aria-label="Favori">'+(st.f[r.id]?"★":"☆")+"</button></div></div>";
 if(!steps)h+=cover(r,true);
-h+="<h2>"+esc(r.t)+'</h2><p class="sub" style="margin:0">'+esc(r.a)+(r.m?" · "+esc(r.m):"")+"</p>";
+h+="<h2>"+esc(r.t)+'</h2><p class="sub" style="margin:0">'+(r.k?esc(KN[r.k]||"")+" · ":"")+esc(r.a)+(r.m?" · "+esc(r.m):"")+"</p>";
 h+='<div class="stp"><button id="pm" aria-label="Moins"'+(p<=1?" disabled":"")+'>−</button><b>'+p+" personne"+(p>1?"s":"")+'</b><button id="pp" aria-label="Plus"'+(p>=6?" disabled":"")+">+</button></div>";
 h+='<div class="tabs"><button class="g'+(!steps?" on":"")+'" id="ti">Ingrédients</button><button class="g'+(steps?" on":"")+'" id="ts">Cuisiner</button></div>';
 if(!steps){var L=inList(r.id);
-h+='<div class="kpi"><div><b>'+gtxt(cp)+' g</b><span>glucides nets / portion</span></div><div><b>'+gtxt(cp*p)+' g</b><span>au total pour '+p+" pers.</span></div></div>";
+var kp=kcal(r);
+h+='<div class="kpi"><div><b>'+gtxt(cp)+' g</b><span>glucides nets / portion</span></div><div><b>'+ktxt(kp)+' kcal</b><span>par portion</span></div></div>';
+h+='<p class="small" style="margin:8px 0 0">Total pour '+p+" pers. : <b>"+ktxt(kp*p)+" kcal</b> · "+gtxt(cp*p)+" g de glucides nets</p>";
 h+='<ul class="ing">'+ings(r).map(function(x){return"<li>"+esc(x)+"</li>"}).join("")+"</ul>";
 h+='<div class="nav"><button class="g" id="sl">'+(L?"✓ Dans la liste":"🛒 Ajouter aux courses")+'</button><button class="b" id="go">Cuisiner →</button></div>';
 var f=p/2;
-h+='<details class="nc"><summary>Détail des glucides nets ('+p+' pers.)</summary><table>'+nu.rows.map(function(x){return"<tr><td>"+esc(scaleIng(x.o.raw,f))+"</td><td>"+(x.c.seas?"—":x.c.known?(x.c.v*f<.5?"< 0,5":(Math.round(x.c.v*f*10)/10).toString().replace(".",","))+" g":"?")+"</td></tr>"}).join("")+'<tr><td><b>Total</b></td><td><b>'+gtxt(nu.tot*f)+" g</b></td></tr></table>";
-h+='<p class="small">Estimation calculée automatiquement à partir de valeurs moyennes (glucides hors fibres). Assaisonnements « — » négligeables'+(nu.unk?" ; « ? » = ingrédient non reconnu, compté 0":"")+'.'+(r.gm!=null&&r.gm!==""?" Pour cette recette, ta valeur manuelle ("+r.gm+" g) est utilisée.":"")+"</p></details>";
+h+='<details class="nc"><summary>Détail nutritionnel ('+p+' pers.)</summary><table><tr><td class="small">Ingrédient</td><td class="small">Glucides</td><td class="small">Kcal</td></tr>'+nu.rows.map(function(x){var kc=x.c.kc*f;return"<tr><td>"+esc(scaleIng(x.o.raw,f))+"</td><td>"+(x.c.seas?"—":x.c.known?(x.c.v*f<.5?"< 0,5":(Math.round(x.c.v*f*10)/10).toString().replace(".",","))+" g":"?")+"</td><td>"+(x.c.seas?"—":x.c.known?Math.round(kc):"?")+"</td></tr>"}).join("")+'<tr><td><b>Total</b></td><td><b>'+gtxt(nu.tot*f)+" g</b></td><td><b>"+ktxt(nu.kc*f)+"</b></td></tr></table>";
+h+='<p class="small">Estimation calculée automatiquement à partir de valeurs nutritionnelles moyennes (glucides hors fibres, féculents pesés crus). Assaisonnements « — » négligeables'+(nu.unk?" ; « ? » = ingrédient non reconnu, compté 0":"")+'.'+(r.gm!=null&&r.gm!==""?" Pour cette recette, ta valeur manuelle ("+r.gm+" g) est utilisée.":"")+"</p></details>";
 h+='<h3>Mes notes</h3><textarea id="nt" placeholder="Variantes, réglages, avis…">'+esc(st.n[r.id]||"")+"</textarea>"}
 else{var n=r.s.length,k=Math.min(view.step||0,n-1);view.step=k;
 h+='<div class="prog"><i style="width:'+((k+1)/n*100)+'%"></i></div><p class="sub">Étape '+(k+1)+" sur "+n+(navigator.wakeLock?" · l’écran reste allumé":"")+'</p><div class="step" id="sp">'+timers(esc(r.s[k]))+"</div>";
@@ -372,7 +430,7 @@ st.L=st.L.filter(function(L){return byId(L.id)});
 if(!st.L.length&&!st.X.length)h+='<p class="empty">Ta liste est vide.<br>Ouvre une recette et touche « 🛒 Ajouter aux courses ».<br>Les ingrédients de toutes les recettes choisies sont regroupés par rayon.</p>';
 if(st.L.length)h+='<p class="sub">'+st.L.length+" recette"+(st.L.length>1?"s":"")+" choisie"+(st.L.length>1?"s":"")+' :</p><div class="rc">'+st.L.map(function(L,n){return"<span>"+esc(byId(L.id).t)+" · "+(L.p||2)+' p.<button data-rm="'+n+'" aria-label="Retirer">✕</button></span>'}).join("")+"</div>";
 var items=shop();
-["L","V","C","E","Z"].forEach(function(a){var its=items.filter(function(x){return x.ais==a});if(!its.length)return;
+["L","V","C","B","E","Z"].forEach(function(a){var its=items.filter(function(x){return x.ais==a});if(!its.length)return;
 h+='<p class="aisle">'+AIS[a]+'</p><div class="grp">'+its.map(function(x){var d=st.C[x.k];return'<label class="i'+(d?" d":"")+'"><input type="checkbox" data-k="'+esc(x.k)+'"'+(d?" checked":"")+"><span>"+esc(x.t)+(x.from.length>1?'<br><span class="small">'+x.from.length+" recettes</span>":"")+"</span></label>"}).join("")+"</div>"});
 h+='<p class="aisle">Autres articles</p><div class="grp">';
 st.X.forEach(function(x,k){h+='<label class="i'+(x.d?" d":"")+'"><input type="checkbox" data-x="'+k+'"'+(x.d?" checked":"")+"><span>"+esc(x.t)+"</span></label>"});
@@ -389,7 +447,7 @@ if(!document.getElementById("sh"))return;
 document.getElementById("uc").onclick=function(){st.C={};st.X.forEach(function(x){x.d=false});save();render()};
 document.getElementById("vd").onclick=function(){if(confirm("Vider toute la liste de courses ?")){st.L=[];st.X=[];st.C={};save();render()}};
 document.getElementById("sh").onclick=function(){var t="🛒 Liste de courses\n";
-["L","V","C","E","Z"].forEach(function(a){var its=items.filter(function(x){return x.ais==a&&!st.C[x.k]});if(its.length)t+="\n"+AIS[a]+"\n"+its.map(function(x){return"- "+x.t}).join("\n")+"\n"});
+["L","V","C","B","E","Z"].forEach(function(a){var its=items.filter(function(x){return x.ais==a&&!st.C[x.k]});if(its.length)t+="\n"+AIS[a]+"\n"+its.map(function(x){return"- "+x.t}).join("\n")+"\n"});
 var ox=st.X.filter(function(x){return!x.d});if(ox.length)t+="\nAutres\n"+ox.map(function(x){return"- "+x.t}).join("\n")+"\n";
 if(navigator.share)navigator.share({title:"Liste de courses",text:t}).catch(function(){});
 else if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast("Liste copiée")})}}
@@ -398,6 +456,8 @@ else if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toa
 function edit(r){var n=!r;r=r||{t:"",a:"",gm:"",m:"",i:[],s:[],e:[]};
 var h='<div class="top"><button class="back" id="bk">← Annuler</button></div><h2>'+(n?"Nouvelle recette":"Modifier la recette")+"</h2>";
 h+='<label class="f">Nom</label><input type="text" id="et" value="'+esc(r.t)+'">';
+var dk=n?(S()=="cl"?(F.c.indexOf("k:")==0?F.c.slice(2):"autre"):""):(r.k||"");
+h+='<label class="f">Rubrique</label><select id="ek"><option value="">🥗 Low carb</option>'+Object.keys(KN).map(function(k){return'<option value="'+k+'">🍝 '+KN[k]+"</option>"}).join("")+"</select>";
 h+='<div class="row"><div style="flex:1"><label class="f">Appareil</label><input type="text" id="ea" list="apl" value="'+esc(r.a)+'" placeholder="Air fryer…"></div><div style="flex:1"><label class="f">Temps</label><input type="text" id="em" value="'+esc(r.m)+'" placeholder="20 min"></div></div>';
 h+='<datalist id="apl"><option value="Plaque"><option value="Cookeo"><option value="Air fryer"><option value="Robot Moulinex"><option value="Four"></datalist>';
 h+='<label class="f">Ingrédients <span class="hint">— pour 2 personnes, un par ligne, avec la quantité (ex. : 150 g de brocoli, 2 œufs, 10 cl de crème)</span></label><textarea id="ei" rows="7" placeholder="4 œufs&#10;150 g d’épinards">'+esc(r.i.join("\n"))+"</textarea>";
@@ -406,17 +466,17 @@ h+='<label class="f">Étapes <span class="hint">— une par ligne ; écris les t
 h+='<label class="f">Glucides nets par portion <span class="hint">— laisse vide pour le calcul automatique</span></label><input type="number" id="eg" inputmode="decimal" min="0" step="0.5" value="'+esc(r.gm)+'">';
 h+='<label class="f">Émojis de l’illustration <span class="hint">— 1 ou 2, facultatif</span></label><input type="text" id="ee" value="'+esc((r.e||[]).join(""))+'" placeholder="🍗🥦">';
 h+='<div class="nav"><button class="b" id="ok">Enregistrer</button></div>'+(n?"":'<div class="nav"><button class="x" id="del">Supprimer cette recette</button></div>');
-app.innerHTML=h;
+app.innerHTML=h;document.getElementById("ek").value=dk;
 var ei=document.getElementById("ei"),eci=document.getElementById("eci");
 function prev(){var tmp={id:"tmp",i:ei.value.split("\n").map(function(x){return x.trim()}).filter(Boolean)};if(!tmp.i.length){eci.textContent="";return}
-var nu=nutri(tmp);eci.textContent="Calcul auto : ≈ "+gtxt(nu.pp)+" g de glucides nets par portion"+(nu.unk?" ("+nu.unk+" ingrédient"+(nu.unk>1?"s":"")+" non reconnu"+(nu.unk>1?"s":"")+")":"")+"."}
+var nu=nutri(tmp);eci.textContent="Calcul auto : ≈ "+gtxt(nu.pp)+" g de glucides nets et "+ktxt(nu.kpp)+" kcal par portion"+(nu.unk?" ("+nu.unk+" ingrédient"+(nu.unk>1?"s":"")+" non reconnu"+(nu.unk>1?"s":"")+")":"")+"."}
 ei.oninput=prev;prev();
 document.getElementById("bk").onclick=back;
 document.getElementById("ok").onclick=function(){
 function v(id){return document.getElementById(id).value.trim()}
 function lines(id){return v(id).split("\n").map(function(x){return x.trim()}).filter(Boolean)}
 var em=v("ee"),ems=em?(em.match(/\p{Extended_Pictographic}️?/gu)||[]).slice(0,2):[];
-var o={t:v("et"),a:v("ea")||"Autre",m:v("em"),gm:v("eg")===""?null:parseFloat(v("eg").replace(",",".")),i:lines("ei"),s:lines("es"),e:ems};
+var o={k:document.getElementById("ek").value,t:v("et"),a:v("ea")||"Autre",m:v("em"),gm:v("eg")===""?null:parseFloat(v("eg").replace(",",".")),i:lines("ei"),s:lines("es"),e:ems};
 if(!o.t){toast("Donne un nom à la recette");return}if(!o.s.length)o.s=["(aucune étape)"];
 if(n){o.id="u"+Date.now();st.u.push(o)}else{o.id=r.id;for(var k=0;k<st.u.length;k++)if(st.u[k].id==r.id)st.u[k]=o}
 save();toast("Recette enregistrée");go("#r/"+o.id,true)};
@@ -428,7 +488,7 @@ function more(){var h='<h1>Réglages</h1>';
 h+='<label class="f">Thème</label><select id="th"><option value="">Automatique</option><option value="light">Clair</option><option value="dark">Sombre</option></select>';
 h+='<h3>Sauvegarde</h3><p class="small">Favoris, notes, recettes perso, photos, nombre de personnes et liste de courses sont enregistrés sur ce téléphone et marchent hors ligne. Exporte une sauvegarde pour ne rien perdre en cas de réinstallation ou de changement de téléphone.</p>';
 h+='<div class="nav"><button class="g" id="ex">Exporter</button><button class="g" id="im">Importer</button></div><input type="file" id="fi" accept=".json,application/json" hidden>';
-h+='<h3>À propos</h3><p class="small">Recettes low carb · '+R.length+" recettes de base, "+st.u.length+" perso, "+Object.keys(st.f).length+" favori(s), "+Object.keys(P).length+' photo(s).<br>Les glucides nets sont des estimations calculées à partir de valeurs nutritionnelles moyennes.</p>';
+h+='<h3>À propos</h3><p class="small">'+R.filter(function(r){return!r.k}).length+" recettes low carb, "+C.length+" recettes riz, pâtes & co, "+st.u.length+" perso, "+Object.keys(st.f).length+" favori(s), "+Object.keys(P).length+' photo(s).<br>Les glucides nets et les calories sont des estimations calculées à partir de valeurs nutritionnelles moyennes.</p>';
 app.innerHTML=h;
 var th=document.getElementById("th");th.value=st.theme||"";th.onchange=function(){st.theme=th.value;save();theme()};
 document.getElementById("ex").onclick=function(){var data=JSON.stringify({app:"recettes",v:2,st:st,photos:P}),name="recettes-sauvegarde-"+new Date().toISOString().slice(0,10)+".json";
